@@ -1,63 +1,60 @@
 
-#' @export
-cli <- NULL
-
 #' Create a command line interface
 #'
 #' @format
-#' `cli_class` is an R6 class that represents a command line interface
+#' `cliapp` is an R6 class that represents a command line interface
 #' (CLI). It has methods that represent high-level, logical CLI building
 #' blocks. The main advantage of this, is that the actual formatting of
 #' the output is decoupled from the structure of the output, and it is
 #' defined elsewhere, in themes (see [cli-themes]).
 #'
 #' @description
-#' `cli` is a `cli_class` object that is created automatically when the
+#' `cli` is a `cliapp` object that is created automatically when the
 #' package is loaded. You can use it to create a consistent command line
 #' interface.
 #'
 #' @section Usage:
 #' ```
-#' cli <- cli_class$new(theme = getOption("cli.theme"))
+#' app <- cliapp$new(theme = getOption("cli.theme"))
 #'
-#' cli$text(..., .envir = parent.frame())
-#' cli$verbatim(..., .envir = parent.frame())
+#' app$text(..., .envir = parent.frame())
+#' app$verbatim(..., .envir = parent.frame())
 #'
-#' cli$h1(text, id = NULL, class = NULL, .envir = parent.frame())
-#' cli$h2(text, id = NULL, class = NULL, .envir = parent.frame())
-#' cli$h3(text, id = NULL, class = NULL, .envir = parent.frame())
+#' app$h1(text, id = NULL, class = NULL, .envir = parent.frame())
+#' app$h2(text, id = NULL, class = NULL, .envir = parent.frame())
+#' app$h3(text, id = NULL, class = NULL, .envir = parent.frame())
 #'
-#' cli$div(id = NULL, class = NULL, theme = NULL, .auto_close = TRUE,
+#' app$div(id = NULL, class = NULL, theme = NULL, .auto_close = TRUE,
 #'         .envir = parent.frame())
-#' cli$par(id = NULL, class = NULL, .auto_close = TRUE,
+#' app$par(id = NULL, class = NULL, .auto_close = TRUE,
 #'         .envir = parent.frame())
-#' cli$end(id = NULL)
+#' app$end(id = NULL)
 #'
-#' cli$ul(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+#' app$ul(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
 #'        .envir = parent.frame())
-#' cli$ol(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+#' app$ol(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
 #'        .envir = parent.frame())
-#' cli$dl(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+#' app$dl(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
 #'        .envir = parent.frame())
-#' cli$it(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
-#'        .envir = parent.frame())
-#'
-#' cli$alert(text, id = NULL, class = NULL, wrap = FALSE,
-#'        .envir = parent.frame())
-#' cli$alert_success(text, id = NULL, class = NULL, wrap = FALSE,
-#'        .envir = parent.frame())
-#' cli$alert_danger(text, id = NULL, class = NULL, wrap = FALSE,
-#'        .envir = parent.frame())
-#' cli$alert_warning(text, id = NULL, class = NULL, wrap = FALSE,
-#'        .envir = parent.frame())
-#' cli$alert_info(text, id = NULL, class = NULL, wrap = FALSE,
+#' app$it(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
 #'        .envir = parent.frame())
 #'
-#' cli$progress_bar(...)
+#' app$alert(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' app$alert_success(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' app$alert_danger(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' app$alert_warning(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' app$alert_info(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
 #'
-#' cli$list_themes()
-#' cli$add_theme(theme, .auto_remove = TRUE, .envir = parent.frame())
-#' cli$remove_theme(id)
+#' app$progress_bar(...)
+#'
+#' app$list_themes()
+#' app$add_theme(theme, .auto_remove = TRUE, .envir = parent.frame())
+#' app$remove_theme(id)
 #' ```
 #'
 #' @section Arguments:
@@ -144,19 +141,19 @@ cli <- NULL
 #' [cli-themes].
 #'
 #' @section Progress Bars:
-#' `cli_class` integrates with progress bars from the progress package.
-#' Create you progress bar with the `cli_class$progress_bar()` method,
-#' and then you can use all the other `cli_class` methods to create output.
+#' `cliapp` integrates with progress bars from the progress package.
+#' Create you progress bar with the `cliapp$progress_bar()` method,
+#' and then you can use all the other `cliapp` methods to create output.
 #' The progress bar will be automatically kept at the last line of your
 #' output.
 #'
-#' @name cli_class
+#' @name cliapp
 #' @aliases cli
 #' @importFrom R6 R6Class
 #' @export
 
-cli_class <- R6Class(
-  "cli_class",
+cliapp <- R6Class(
+  "cliapp",
   public = list(
     initialize = function(theme = getOption("cli.theme"))
       cli_init(self, private, theme),

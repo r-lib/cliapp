@@ -9,7 +9,7 @@
 #' Themes can come from three sources:
 #' * The builtin theme of the cli package.
 #' * The theme from the `cli.theme` option. (At the time when the
-#'   `cli_class` object is created.)
+#'   `cliapp` object is created.)
 #' * Themes added with he `add_theme()` method.
 #'
 #' @section Examples:

@@ -18,7 +18,7 @@ test_style <- function() {
   )
 }
 
-clix <- cli_class$new(theme = NULL)
+clix <- cliapp$new(theme = NULL)
 
 capture_messages <- function(expr) {
   msgs <- character()
