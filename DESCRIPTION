@@ -10,6 +10,17 @@ LazyData: true
 URL: https://github.com/r-lib/cliapp#readme
 BugReports: https://github.com/r-lib/cliapp/issues
 RoxygenNote: 6.1.0
+Imports:
+    cli,
+    crayon,
+    fansi,
+    glue,
+    progress,
+    R6,
+    selectr,
+    utils,
+    withr,
+    xml2
 Suggests: 
     testthat
 Encoding: UTF-8

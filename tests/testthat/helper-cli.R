@@ -1,0 +1,39 @@
+
+test_style <- function() {
+  list(
+    ".testcli" = list(
+      h1 = list(
+        "font-weight" = "bold",
+        "font-style" = "italic",
+        "margin-top" = 1,
+        "margin-bottom" = 1),
+      h2 = list(
+        "font-weight" = "bold",
+        "margin-top" = 1,
+        "margin-bottom" = 1),
+      h3 = list(
+        "text-decoration" = "underline",
+        "margin-top" = 1)
+    )
+  )
+}
+
+clix <- cli_class$new(theme = NULL)
+
+capture_messages <- function(expr) {
+  msgs <- character()
+  i <- 0
+  suppressMessages(withCallingHandlers(
+    expr,
+    message = function(e) msgs[[i <<- i + 1]] <<- conditionMessage(e)))
+  paste0(msgs, collapse = "")
+}
+
+capt <- function(expr, print_it = TRUE) {
+  pr <- if (print_it) print else identity
+  paste(capture.output(pr(expr)), collapse = "\n")
+}
+
+capt0 <- function(expr) {
+  capture_messages(expr)
+}
