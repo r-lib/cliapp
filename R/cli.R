@@ -15,7 +15,8 @@
 #'
 #' @section Usage:
 #' ```
-#' app <- cliapp$new(theme = getOption("cli.theme"))
+#' app <- cliapp$new(theme = getOption("cli.theme"),
+#'                    output = c("message", "stdout"))
 #'
 #' app$text(..., .envir = parent.frame())
 #' app$verbatim(..., .envir = parent.frame())
@@ -155,8 +156,9 @@
 cliapp <- R6Class(
   "cliapp",
   public = list(
-    initialize = function(theme = getOption("cli.theme"))
-      cli_init(self, private, theme),
+    initialize = function(theme = getOption("cli.theme"),
+                          output = c("message", "stdout"))
+      cli_init(self, private, theme, match.arg(output)),
 
     ## Themes
     list_themes = function()
@@ -268,6 +270,7 @@ cliapp <- R6Class(
     theme = NULL,
     margin = 0,
     state = NULL,
+    output = NULL,
 
     get_matching_styles = function()
       tail(private$state$matching_styles, 1)[[1]],
@@ -307,7 +310,8 @@ cliapp <- R6Class(
 
 #' @importFrom xml2 read_html xml_find_first
 
-cli_init <- function(self, private, theme) {
+cli_init <- function(self, private, theme, output) {
+  private$output <- output
   private$raw_themes <- list(
     default = cli_builtin_theme(), optional = theme)
   private$theme <- theme_create(private$raw_themes)

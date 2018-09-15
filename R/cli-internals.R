@@ -18,7 +18,11 @@ cli__get_width <- function(self, private) {
 }
 
 cli__cat <- function(self, private, lines) {
-  message(lines, appendLF = FALSE)
+  if (private$output == "message") {
+    message(lines, appendLF = FALSE)
+  }  else {
+    cat(lines, sep = "")
+  }
   private$margin <- 0
 }
 
@@ -43,7 +47,11 @@ cli__cat_ln <- function(self, private, lines, indent) {
 
   bar <- private$get_progress_bar()
   if (is.null(bar)) {
-    message(paste0(lines, "\n"), appendLF = FALSE)
+    if (private$output == "message") {
+      message(paste0(lines, "\n"), appendLF = FALSE)
+    } else {
+      cat(paste0(lines, "\n"), sep = "")
+    }
   } else {
     bar$message(lines, set_width = FALSE)
   }
@@ -51,7 +59,12 @@ cli__cat_ln <- function(self, private, lines, indent) {
 
 cli__vspace <- function(self, private, n) {
   if (private$margin < n) {
-    message(strrep("\n", n - private$margin), appendLF = FALSE)
+    sp <- strrep("\n", n - private$margin)
+    if (private$output == "message") {
+      message(sp, appendLF = FALSE)
+    } else {
+      cat(sp)
+    }
     private$margin <- n
   }
 }
