@@ -2,7 +2,10 @@
 
 export(cliapp)
 export(console_width)
+export(default_app)
 export(default_theme)
+export(start_app)
+export(stop_app)
 importFrom(R6,R6Class)
 importFrom(cli,symbol)
 importFrom(crayon,bold)

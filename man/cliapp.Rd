@@ -25,7 +25,8 @@ alerts, progress bars, etc. It uses CSS for theming.
 \section{Usage}{
 
 ```
-app <- cliapp$new(theme = getOption("cli.theme"))
+app <- cliapp$new(theme = getOption("cli.theme"),
+                   output = c("message", "stdout"))
 
 app$text(..., .envir = parent.frame())
 app$verbatim(..., .envir = parent.frame())
