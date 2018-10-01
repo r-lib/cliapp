@@ -19,7 +19,7 @@ cli__get_width <- function(self, private) {
 
 cli__cat <- function(self, private, lines) {
   if (private$output == "message") {
-    message(lines, appendLF = FALSE)
+    cli__message(lines, appendLF = FALSE)
   }  else {
     cat(lines, sep = "")
   }
@@ -48,7 +48,7 @@ cli__cat_ln <- function(self, private, lines, indent) {
   bar <- private$get_progress_bar()
   if (is.null(bar)) {
     if (private$output == "message") {
-      message(paste0(lines, "\n"), appendLF = FALSE)
+      cli__message(paste0(lines, "\n"), appendLF = FALSE)
     } else {
       cat(paste0(lines, "\n"), sep = "")
     }
@@ -61,10 +61,30 @@ cli__vspace <- function(self, private, n) {
   if (private$margin < n) {
     sp <- strrep("\n", n - private$margin)
     if (private$output == "message") {
-      message(sp, appendLF = FALSE)
+      cli__message(sp, appendLF = FALSE)
     } else {
       cat(sp)
     }
     private$margin <- n
   }
+}
+
+cli__message <- function(..., domain = NULL, appendLF = TRUE) {
+
+  msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
+
+  cond <- structure(
+    list(message = msg, call = NULL),
+    class = c("cliapp_message", "callr_message", "message", "condition"))
+
+  defaultHandler <- function(c) {
+    cat(conditionMessage(c), file = stderr(), sep = "")
+  }
+
+  withRestarts({
+    signalCondition(cond)
+    defaultHandler(cond)
+  }, muffleMessage = function() NULL)
+
+  invisible()
 }

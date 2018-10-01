@@ -4,8 +4,10 @@
 cli_progress_bar <- function(self, private, ...) {
   stream <- stderr()
   if (!nzchar(stream)) stream <- stdout()
-  bar <- progress_bar$new(..., stream = stream,
-    width = private$get_width())
+  bar <- progress_bar$new(
+    ..., stream = stream,
+    width = private$get_width(),
+    message_class = c("cliapp_message", "callr_message"))
   private$progress_bars <- c(private$progress_bars, list(bar))
   private$cleanup_progress_bars()
   bar
