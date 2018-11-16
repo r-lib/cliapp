@@ -34,8 +34,8 @@ opts <-  docopt(doc)
 outdated <- function(lib = NULL, notcran = FALSE) {
   if (is.null(lib)) lib <- .libPaths()[1]
   inst <- utils::installed.packages(lib = lib)
-  app$alert_info("Getting repository metadata")$text()
-  repo <- cran_list(rownames(inst))
+  app$alert_info("Getting repository metadata")
+  repo <- meta_cache_list(rownames(inst))
 
   if (!notcran) inst <- inst[inst[, "Package"] %in% repo$package, ]
 
@@ -63,5 +63,4 @@ outdated <- function(lib = NULL, notcran = FALSE) {
   }
 }
 
-app$text()
 outdated(opts$l, opts$x)

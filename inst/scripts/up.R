@@ -48,5 +48,4 @@ up <- function(urls, timeout) {
   ))
 }
 
-app$text()
 up(opts$URLS, timeout = as.numeric(opts$t))

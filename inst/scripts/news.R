@@ -2,7 +2,8 @@
 
 theme <- list(
   "url" = list(color = "blue"),
-  ".pkg" = list(color = "orange"))
+  ".pkg" = list(color = "orange"),
+  "it" = list("margin-bottom" = 1))
 app <- cliapp::cliapp$new(theme = theme, output = "stdout")
 
 tryCatch({
@@ -96,7 +97,6 @@ format_results <- function(results) {
 format_result <- function(result, num) {
   pkg <- result$package
   ago <- vague_dt(Sys.time() - parse_iso_8601(result$date))
-  app$text()
   app$it()
   app$text("{num}. {pkg {pkg$Package}} {pkg$Version} --
            {ago} by {emph {pkg$Maintainer}}")
