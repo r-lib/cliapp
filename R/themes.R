@@ -211,9 +211,9 @@ merge_styles <- function(old, new) {
 merge_embedded_styles <- function(oldstyle, newstyle) {
   old <- oldstyle$main
   new <- newstyle$main
-  ## margins are additive, rest is updated, counter is reset
-  top <- (old$`margin-top` %||% 0L) + (new$`margin-top` %||% 0L)
-  bottom <- (old$`margin-bottom` %||% 0L) + (new$`margin-bottom` %||% 0L)
+  ## side margins are additive, rest is updated, counter is reset
+  top <- new$`margin-top` %||% 0L
+  bottom <- new$`margin-bottom` %||% 0L
   left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
   right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
   start <- new$start %||% 1L
