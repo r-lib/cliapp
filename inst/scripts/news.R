@@ -1,45 +1,36 @@
 #! /usr/bin/env Rscript
 
-theme <- list(
-  "url" = list(color = "blue"),
-  ".pkg" = list(color = "orange"),
-  "it" = list("margin-bottom" = 1))
-app <- cliapp::cliapp$new(theme = theme, output = "stdout")
+setup_app <- function() {
+  theme <- list(
+    "url" = list(color = "blue"),
+    ".pkg" = list(color = "orange"),
+    "it" = list("margin-bottom" = 1))
+  start_app(theme = theme, output = "stdout")
+}
 
-tryCatch({
-  library(httr)
-  library(jsonlite)
-  library(prettyunits)
-  library(glue)
-  library(parsedate)
-  library(docopt) },
-  error = function(e) {
-    app$alert_danger(
-          "The {pkg glue}, {pkg httr}, {pkg jsonlite}, {pkg prettyunits},",
-          " {pkg parsedate} and {pkg docopt} packages are needed!")
-    q(save = "no", status = 1)
-  })
+load_packages <- function() {
+  tryCatch({
+    library(cliapp)
+    library(httr)
+    library(jsonlite)
+    library(prettyunits)
+    library(glue)
+    library(parsedate)
+    library(docopt) },
+    error = function(e) {
+      default_app()$alert_danger(
+            "The {pkg glue}, {pkg httr}, {pkg jsonlite}, {pkg prettyunits},",
+            " {pkg parsedate} and {pkg docopt} packages are needed!")
+      q(save = "no", status = 1)
+    })
+}
 
-"Usage:
-  news.R [-r | --reverse] [-n num ]
-  news.R [-r | --reverse] --day | --week | --since date
-  news.R [-h | --help]
+news <- function(n = 10, day = FALSE, week = FALSE, since = NULL,
+                 reverse = FALSE) {
 
-Options:
-  -n num        Show the last 'n' releases [default: 10].
-  --day         Show releases in the last 24 hours
-  --week        Show relaases in the last 7 * 24 hours
-  --since date  Show releases since 'date'
-  -r --reverse  Reverse the order, show older on top
-  -h --help     Print this help message
-
-New package releases on CRAN
-" -> doc
-
-opts <- docopt(doc)
-
-news <- function(n, day, week, since, reverse) {
-
+  load_packages()
+  setup_app()
+  
   result <- if (day)
     news_day()
   else if (week)
@@ -87,21 +78,46 @@ do_query <- function(ep) {
 }
 
 format_results <- function(results) {
-  app$
+  default_app()$
     div(theme = list(ul = list("list-style-type" = "")))
-  app$ul()
+  default_app()$ol()
 
-  for (i in seq_along(results)) format_result(results[[i]], i)
+  lapply(results, format_result)
 }
 
-format_result <- function(result, num) {
+parse_arguments <- function() {
+
+  "Usage:
+  news.R [-r | --reverse] [-n num ]
+  news.R [-r | --reverse] --day | --week | --since date
+  news.R [-h | --help]
+
+Options:
+  -n num        Show the last 'n' releases [default: 10].
+  --day         Show releases in the last 24 hours
+  --week        Show relaases in the last 7 * 24 hours
+  --since date  Show releases since 'date'
+  -r --reverse  Reverse the order, show older on top
+  -h --help     Print this help message
+
+New package releases on CRAN
+" -> doc
+
+  docopt(doc)
+}
+
+format_result <- function(result) {
   pkg <- result$package
   ago <- vague_dt(Sys.time() - parse_iso_8601(result$date))
-  app$it()
-  app$text("{num}. {pkg {pkg$Package}} {pkg$Version} --
+  default_app()$it()
+  default_app()$text("{pkg {pkg$Package}} {pkg$Version} --
            {ago} by {emph {pkg$Maintainer}}")
-  app$text("{pkg$Title}")
-  app$text("{url https://r-pkg.org/pkg/{pkg$Package}}")
+  default_app()$text("{pkg$Title}")
+  default_app()$text("{url https://r-pkg.org/pkg/{pkg$Package}}")
 }
 
-news(opts$n, opts$day, opts$week, opts$since, opts$reverse)
+if (is.null(sys.calls())) {
+  load_packages()
+  opts <- parse_arguments()
+  news(opts$n, opts$day, opts$week, opts$since, opts$reverse)
+}

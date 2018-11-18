@@ -3,38 +3,31 @@
 ## To get the pkgcache package:
 ## source("https://install-github.me/r-lib/pkgcache")
 
-theme <- list(
-  "url" = list(color = "blue"),
-  ".pkg" = list(color = "orange"))
-app <- cliapp::cliapp$new(theme = theme, output = "stdout")
+setup_app <- function() {
+  theme <- list(
+    "url" = list(color = "blue"),
+    ".pkg" = list(color = "orange"))
+  start_app(theme = theme, output = "stdout")
+}
 
-tryCatch({
-  library(cli)
-  library(pkgcache)
-  library(docopt) },
-  error = function(e) {
-    app$alert_danger("The {pkg pkgcache} and {pkg docopt} packages are needed!")
-    q(save = "no", status = 1)
-  })
-
-"Usage:
-  outdated.R [-l lib] [-x]
-  outdated.R -h | --help
-
-Options:
-  -x         Print not CRAN/BioC packages as well
-  -l lib     Library directory, default is first directory in the lib path
-  -h --help  Print this help message
-
-Check for outdated packages in a package library.
-" -> doc
-
-opts <-  docopt(doc)
+load_packages <- function() {
+  tryCatch({
+    library(cliapp)
+    library(cli)
+    library(pkgcache)
+    library(docopt) },
+    error = function(e) {
+      default_app()$alert_danger("The {pkg pkgcache} and {pkg docopt} packages are needed!")
+      q(save = "no", status = 1)
+    })
+}
 
 outdated <- function(lib = NULL, notcran = FALSE) {
+  load_packages()
+  setup_app()
   if (is.null(lib)) lib <- .libPaths()[1]
   inst <- utils::installed.packages(lib = lib)
-  app$alert_info("Getting repository metadata")
+  default_app()$alert_info("Getting repository metadata")
   repo <- meta_cache_list(rownames(inst))
 
   if (!notcran) inst <- inst[inst[, "Package"] %in% repo$package, ]
@@ -44,7 +37,7 @@ outdated <- function(lib = NULL, notcran = FALSE) {
     iver <- inst[i, "Version"]
 
     if (! pkg %in% repo$package) {
-      app$alert_info("{pkg {pkg}}: \tnot a CRAN/BioC package")
+      default_app()$alert_info("{pkg {pkg}}: \tnot a CRAN/BioC package")
       next
     }
 
@@ -58,9 +51,29 @@ outdated <- function(lib = NULL, notcran = FALSE) {
     bin <- if (any(newest$platform != "source")) "bin" else ""
     src <- if (any(newest$platform == "source")) "src" else ""
 
-    app$alert_danger(
+    default_app()$alert_danger(
           "{pkg {pkg}} \t{iver} {symbol$arrow_right} {mnver}  {emph ({bin} {src})}")
   }
 }
 
-outdated(opts$l, opts$x)
+parse_arguments <- function() {
+  "Usage:
+  outdated.R [-l lib] [-x]
+  outdated.R -h | --help
+
+Options:
+  -x         Print not CRAN/BioC packages as well
+  -l lib     Library directory, default is first directory in the lib path
+  -h --help  Print this help message
+
+Check for outdated packages in a package library.
+  " -> doc
+
+  docopt(doc)
+}
+
+if (is.null(sys.calls())) {
+  load_packages()
+  opts <- parse_arguments()
+  outdated(opts$l, opts$x)
+}

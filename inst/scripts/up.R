@@ -3,43 +3,37 @@
 ## To get the async package:
 ## source("https://install-github.me/r-lib/async")
 
-theme <- list("url" = list(color = "blue"))
-app <- cliapp::cliapp$new(theme = theme, output = "stdout")
+setup_app <- function() {
+  theme <- list("url" = list(color = "blue"))
+  app <- cliapp::start_app(theme = theme, output = "stdout")
+}
 
-tryCatch({
-  library(async)
-  library(docopt) },
-  error = function(e) {
-    app$alert_danger("The {pkg async} and {pkg docopt} packages are needed!")
-    q(save = "no", status = 1)
-  })
+load_packages <- function() {
+  tryCatch({
+    library(cliapp)
+    library(async)
+    library(docopt) },
+    error = function(e) {
+      default_app()$alert_danger("The {pkg async} and {pkg docopt} packages are needed!")
+      q(save = "no", status = 1)
+    })
+}
 
-"Usage:
-  up.R [-t timeout] [URLS ...]
-  up.R -h | --help
-
-Options:
-  -t timeout   Timeout for giving up on a site, in seconds [default: 5].
-  -h --help    Print this help message
-
-Check is web site(s) are up.
-" -> doc
-
-opts <- docopt(doc)
-
-up <- function(urls, timeout) {
+up <- function(urls, timeout = 5) {
+  load_packages()
+  setup_app()
   chk_url <- async(function(url, ...) {
     http_head(url, ...)$
       then(function(res) {
         if (res$status_code < 300) {
-          app$alert_success("{url {url}} ({res$times[['total']]}s)")
+          default_app()$alert_success("{url {url}} ({res$times[['total']]}s)")
         } else {
-          app$alert_danger("{url {url}} (HTTP {res$status_code})")
+          default_app()$alert_danger("{url {url}} (HTTP {res$status_code})")
         }
       })$
       catch(error = function(err) {
         e <- if (grepl("timed out", err$message)) "timed out" else "error"
-        app$alert_danger("{url {url}} ({e})")
+        default_app()$alert_danger("{url {url}} ({e})")
       })
   })
 
@@ -48,4 +42,24 @@ up <- function(urls, timeout) {
   ))
 }
 
-up(opts$URLS, timeout = as.numeric(opts$t))
+parse_arguments <- function() {
+
+  "Usage:
+  up.R [-t timeout] [URLS ...]
+  up.R -h | --help
+
+Options:
+  -t timeout   Timeout for giving up on a site, in seconds [default: 5].
+  -h --help    Print this help message
+
+Check if web sites are up.
+" -> doc
+
+  docopt(doc)
+}
+  
+if (is.null(sys.calls())) {
+  load_packages()
+  opts <- parse_arguments()
+  up(opts$URLS, timeout = as.numeric(opts$t))
+}
