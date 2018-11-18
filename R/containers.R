@@ -166,17 +166,21 @@ cli_it <- function(self, private, items, id, class, .auto_close, .envir) {
     id <- cli__container_start(self, private, "it", id = id, class = class,
                                .auto_close, .envir)
     if (i > length(items)) break
-    private$item_text(type, names(items)[i], items[[i]], cnt_id,
-                      .envir = .envir)
+    private$item_text(type, names(items)[i], cnt_id, .envir, items[[i]])
     self$end(id)
     i <- i + 1
+  }
+
+  if (length(items) == 0) {
+    private$state$delayed_item <-
+      list(type = type, cnt_id = cnt_id, .envir = .envir)
   }
 
   invisible(id)
 }
 
-cli__item_text <- function(self, private, type, name, text, cnt_id,
-                           .envir) {
+cli__item_text <- function(self, private, type, name, cnt_id, .envir, ...,
+                           .list) {
 
   style <- private$get_style()$main
   head <- if (type == "ul") {
@@ -189,8 +193,8 @@ cli__item_text <- function(self, private, type, name, text, cnt_id,
   } else if (type == "dl") {
     paste0(name, ": ")
   }
-  text[1] <- paste0(head, text[1])
-  private$xtext(text, indent = -2, .envir = .envir)
+  private$xtext(.list = c(list(head), list(...), .list), indent = -2,
+                .envir = .envir)
 }
 
 ## Code -------------------------------------------------------------

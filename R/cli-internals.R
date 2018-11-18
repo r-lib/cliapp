@@ -1,9 +1,9 @@
 
 #' @importFrom fansi strwrap_ctl
 
-cli__xtext <- function(self, private, ..., .envir, indent) {
+cli__xtext <- function(self, private, ..., .list, .envir, indent) {
   style <- private$get_style()$main
-  text <- private$inline(..., .envir = .envir)
+  text <- private$inline(..., .list = .list, .envir = .envir)
   text <- strwrap_ctl(text, width = private$get_width())
   if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text, indent = indent)
@@ -27,6 +27,12 @@ cli__cat <- function(self, private, lines) {
 }
 
 cli__cat_ln <- function(self, private, lines, indent) {
+  if (!is.null(item <- private$state$delayed_item)) {
+    private$state$delayed_item <- NULL
+    return(private$item_text(item$type, NULL, item$cnt_id,
+                             item$.envir, .list = lines))
+  }
+
   style <- private$get_style()$main
 
   ## left margin

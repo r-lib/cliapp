@@ -277,18 +277,19 @@ cliapp <- R6Class(
     get_style = function()
       tail(private$state$styles, 1)[[1]],
 
-    xtext = function(..., .envir, indent = 0)
-      cli__xtext(self, private, ..., .envir = .envir, indent = indent),
+    xtext = function(..., .list = NULL, .envir, indent = 0)
+      cli__xtext(self, private, ..., .list = .list,
+                 .envir = .envir, indent = indent),
 
     vspace = function(n = 1)
       cli__vspace(self, private, n),
 
-    inline = function(..., .envir)
-      cli__inline(self, private, ..., .envir = .envir),
+    inline = function(..., .list = NULL, .envir)
+      cli__inline(self, private, ..., .list = .list, .envir = .envir),
 
-    item_text = function(type, name, text, cnt_id, .envir)
-      cli__item_text(self, private, type, name, text, cnt_id,
-                     .envir = .envir),
+    item_text = function(type, name, cnt_id, .envir, ..., .list = NULL)
+      cli__item_text(self, private, type, name, cnt_id, .envir, ...,
+                     .list = .list),
 
     get_width = function()
       cli__get_width(self, private),

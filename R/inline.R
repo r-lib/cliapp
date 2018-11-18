@@ -46,8 +46,10 @@ inline_transformer <- function(code, envir) {
   inline_generic(self, private, funname, out)
 }
 
-cli__inline <- function(self, private, ..., .envir) {
+cli__inline <- function(self, private, ..., .envir, .list) {
   ## This makes a copy that can refer to self and private
   environment(inline_transformer) <- environment()
-  glue(..., .envir = .envir, .transformer = inline_transformer)
+  do.call(
+    glue,
+    c(list(...), .list, list(.envir = .envir, .transformer = inline_transformer)))
 }
