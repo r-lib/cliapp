@@ -8,7 +8,7 @@ inline_list <- NULL
 if (getRversion() >= "2.15.1") globalVariables(c("self", "private"))
 
 inline_generic <- function(self, private, class, x) {
-  cli__container_start(self, private, "span", .auto_close = TRUE,
+  clii__container_start(self, private, "span", .auto_close = TRUE,
                        .envir = environment(), class = class)
   style <- private$get_style()
   xx <- paste0(style$before$content, x, style$after$content)
@@ -46,7 +46,7 @@ inline_transformer <- function(code, envir) {
   inline_generic(self, private, funname, out)
 }
 
-cli__inline <- function(self, private, ..., .envir, .list) {
+clii__inline <- function(self, private, ..., .envir, .list) {
   ## This makes a copy that can refer to self and private
   environment(inline_transformer) <- environment()
   do.call(

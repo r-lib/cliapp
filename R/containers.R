@@ -3,12 +3,12 @@
 #' @importFrom xml2 xml_add_child
 #' @importFrom glue glue
 
-cli__container_start <- function(self, private, tag, .auto_close, .envir,
+clii__container_start <- function(self, private, tag, .auto_close, .envir,
                                  class = NULL, id = NULL) {
   id <- id %||% new_uuid()
   if (.auto_close && !identical(.envir, globalenv())) {
     defer(
-      cli__container_end(self, private, id),
+      clii__container_end(self, private, id),
       envir = .envir,
       priority = "first"
     )
@@ -49,7 +49,7 @@ cli__container_start <- function(self, private, tag, .auto_close, .envir,
 #' @importFrom utils head
 #' @importFrom stats na.omit
 
-cli__container_end <- function(self, private, id) {
+clii__container_end <- function(self, private, id) {
   ## Do not remove the <body>
   if (xml_name(private$state$current) == "body") return(invisible(self))
 
@@ -96,9 +96,9 @@ cli__container_end <- function(self, private, id) {
 
 ## div --------------------------------------------------------------
 
-cli_div <- function(self, private, id, class, theme, .auto_close, .envir) {
+clii_div <- function(self, private, id, class, theme, .auto_close, .envir) {
   theme_id <- self$add_theme(theme, .auto_remove = FALSE)
-  container_id <- cli__container_start(self, private, "div",
+  container_id <- clii__container_start(self, private, "div",
                                        .auto_close, .envir, class, id)
   private$state$xstyles <-
     c(private$state$xstyles, structure(theme_id, names = container_id))
@@ -108,28 +108,28 @@ cli_div <- function(self, private, id, class, theme, .auto_close, .envir) {
 
 ## Paragraph --------------------------------------------------------
 
-cli_par <- function(self, private, id, class, .auto_close, .envir) {
-  cli__container_start(self, private, "par", .auto_close, .envir, class, id)
+clii_par <- function(self, private, id, class, .auto_close, .envir) {
+  clii__container_start(self, private, "par", .auto_close, .envir, class, id)
 }
 
 ## Lists ------------------------------------------------------------
 
-cli_ul <- function(self, private, items, id, class, .auto_close, .envir) {
-  id <- cli__container_start(self, private, "ul", id = id, class = class,
+clii_ul <- function(self, private, items, id, class, .auto_close, .envir) {
+  id <- clii__container_start(self, private, "ul", id = id, class = class,
                              .auto_close, .envir)
   if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
-cli_ol <- function(self, private, items, id, class, .auto_close, .envir) {
-  id <- cli__container_start(self, private, "ol", id = id, class = class,
+clii_ol <- function(self, private, items, id, class, .auto_close, .envir) {
+  id <- clii__container_start(self, private, "ol", id = id, class = class,
                              .auto_close, .envir)
   if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
-cli_dl <- function(self, private, items, id, class, .auto_close, .envir) {
-  id <- cli__container_start(self, private, "dl", id = id, class = class,
+clii_dl <- function(self, private, items, id, class, .auto_close, .envir) {
+  id <- clii__container_start(self, private, "dl", id = id, class = class,
                              .auto_close, .envir)
   if (length(items)) self$end(self$it(items))
   invisible(id)
@@ -137,7 +137,7 @@ cli_dl <- function(self, private, items, id, class, .auto_close, .envir) {
 
 #' @importFrom xml2 xml_parent xml_path xml_attr
 
-cli_it <- function(self, private, items, id, class, .auto_close, .envir) {
+clii_it <- function(self, private, items, id, class, .auto_close, .envir) {
 
   ## check the last active list container
   last <- private$state$current
@@ -163,7 +163,7 @@ cli_it <- function(self, private, items, id, class, .auto_close, .envir) {
 
   i <- 1
   repeat {
-    id <- cli__container_start(self, private, "it", id = id, class = class,
+    id <- clii__container_start(self, private, "it", id = id, class = class,
                                .auto_close, .envir)
     if (i > length(items)) break
     private$item_text(type, names(items)[i], cnt_id, .envir, items[[i]])
@@ -179,7 +179,7 @@ cli_it <- function(self, private, items, id, class, .auto_close, .envir) {
   invisible(id)
 }
 
-cli__item_text <- function(self, private, type, name, cnt_id, .envir, ...,
+clii__item_text <- function(self, private, type, name, cnt_id, .envir, ...,
                            .list) {
 
   style <- private$get_style()$main
@@ -199,12 +199,12 @@ cli__item_text <- function(self, private, type, name, cnt_id, .envir, ...,
 
 ## Code -------------------------------------------------------------
 
-cli_code <- function(self, private, lines, id, class, .auto_close, .envir) {
+clii_code <- function(self, private, lines, id, class, .auto_close, .envir) {
   stop("Code is not implemented yet")
 }
 
 ## Close container(s) -----------------------------------------------
 
-cli_end <- function(self, private, id) {
-  cli__container_end(self, private, id)
+clii_end <- function(self, private, id) {
+  clii__container_end(self, private, id)
 }

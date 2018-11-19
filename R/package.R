@@ -10,6 +10,7 @@ NULL
 
 cliappenv <- new.env()
 cliappenv$stack <- list()
+cliappenv$pid <- Sys.getpid()
 
 #' Start, stop, query the default cli application
 #'
