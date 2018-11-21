@@ -47,7 +47,9 @@ clii__container_end <- function(self, private, id) {
   if (xml_name(private$state$current) == "body") return(invisible(self))
 
   ## Defaults to last container
-  id <- id %||% xml_attr(private$state$current, "id")
+  if (is.null(id) || is.na(id)) {
+    id <- xml_attr(private$state$current, "id")
+  }
 
   ## Do we have 'id' at all?
   cnt <- xml_find_first(

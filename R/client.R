@@ -35,7 +35,7 @@ cli_par <- function(id = NULL, class = NULL, .auto_close = TRUE,
 }
 
 cli_end <- function(id = NULL) {
-  cli__message("end", list(id = id))
+  cli__message("end", list(id = id %||% NA_character_))
 }
 
 cli_ul <- function(items = NULL, id = NULL, class = NULL,
