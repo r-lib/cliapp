@@ -1,5 +1,5 @@
 
-#' @importFrom glue glue
+#' @importFrom glue glue glue_collapse
 
 inline_list <- NULL
 
@@ -16,15 +16,6 @@ inline_generic <- function(self, private, class, x) {
   xx
 }
 
-collapse <- function(...) {
-  glue_ver <- package_version(getNamespaceVersion(asNamespace("glue")))
-  if (glue_ver <= package_version("1.2.0")) {
-    getNamespace("glue")$collapse(...)
-  } else  {
-    getNamespace("glue")$glue_collapse(...)
-  }
-}
-
 inline_transformer <- function(code, envir) {
   res <- tryCatch(
     parse(text = code, keep.source = FALSE),
@@ -32,7 +23,7 @@ inline_transformer <- function(code, envir) {
   )
   if (!inherits(res, "error")) return(eval(res, envir = envir))
 
-  code <- collapse(code, "\n")
+  code <- glue_collapse(code, "\n")
   m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
   has_match <- m != -1
   if (!has_match) stop(res)
@@ -54,7 +45,7 @@ cmd_transformer <- function(code, envir) {
   )
   if (!inherits(res, "error")) return(eval(res, envir = envir))
 
-  code <- collapse(code, "\n")
+  code <- glue_collapse(code, "\n")
   m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
   has_match <- m != -1
   if (!has_match) stop(res)
