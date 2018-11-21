@@ -148,7 +148,6 @@
 #' @name cliapp
 #' @aliases cli
 #' @importFrom R6 R6Class
-#' @export
 
 cliapp <- R6Class(
   "cliapp",
@@ -232,8 +231,10 @@ cliapp <- R6Class(
       clii_alert(self, private, "alert-info", text, id, class, wrap),
 
     ## Progress bars
-    progress_bar = function(...)
-      clii_progress_bar(self, private, ...),
+    progress_bar = function(id, ...)
+      clii_progress_bar(self, private, id, ...),
+    progress = function(id, operation, ...)
+      clii_progress(self, private, id, operation, ...),
 
     reset = function()
       clii_reset(self, private)

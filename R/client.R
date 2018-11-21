@@ -110,7 +110,8 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 }
 
 cli_progress_bar <- function(...) {
-  cli__message("progress_bar", list(...))
+  id <- cli__message("progress_bar", list(id = NULL, ...))
+  cli__remote_progress_bar(id)
 }
 
 cli_reset <- function() {
