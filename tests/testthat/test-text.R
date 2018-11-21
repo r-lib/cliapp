@@ -5,7 +5,6 @@ setup(start_app())
 teardown(stop_app())
 
 test_that("text is wrapped", {
-  cli_reset()
   cli_div(class = "testcli", theme = test_style())
 
   withr::with_options(c(cli.width = 60), {
@@ -18,7 +17,6 @@ test_that("text is wrapped", {
 })
 
 test_that("verbatim text is not wrapped", {
-  cli_reset()
   cli_div(class = "testcli", theme = test_style())
 
   withr::with_options(c(cli.width = 60), {

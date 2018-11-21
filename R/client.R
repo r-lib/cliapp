@@ -117,10 +117,6 @@ cli_progress_bar <- function(...) {
   cli__remote_progress_bar(id)
 }
 
-cli_reset <- function() {
-  cli__message("reset", list())
-}
-
 cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
 
   if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()

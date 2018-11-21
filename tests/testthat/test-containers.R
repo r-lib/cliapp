@@ -83,7 +83,6 @@ test_that("div with special style", {
 })
 
 test_that("margin is squashed", {
-  cli_reset()
   cli_div(theme = list(par = list("margin-top" = 3, "margin-bottom" = 3)))
   out <- capt0({ cli_par(); cli_par(); cli_par() })
   expect_equal(out, "\n\n\n")

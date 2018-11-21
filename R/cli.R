@@ -234,10 +234,7 @@ cliapp <- R6Class(
     progress_bar = function(id, ...)
       clii_progress_bar(self, private, id, ...),
     progress = function(id, operation, ...)
-      clii_progress(self, private, id, operation, ...),
-
-    reset = function()
-      clii_reset(self, private)
+      clii_progress(self, private, id, operation, ...)
   ),
 
   private = list(
@@ -377,12 +374,5 @@ clii_alert <- function(self, private, type, text, id, class, wrap) {
   if (is.function(style$main$fmt)) text <- style$main$fmt(text)
   if (wrap) text <- strwrap_ctl(text, exdent = 2)
   private$cat_ln(text)
-  invisible(self)
-}
-
-## Other ------------------------------------------------------------
-
-clii_reset <- function(self, private) {
-  private$margin <- 0
   invisible(self)
 }
