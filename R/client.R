@@ -39,32 +39,35 @@ cli_end <- function(id = NULL) {
 }
 
 cli_ul <- function(items = NULL, id = NULL, class = NULL,
-                   .auto_close = TRUE, .envir = parent.frame()) {
+                   .close = TRUE, .auto_close = TRUE,
+                   .envir = parent.frame()) {
   cli__message(
     "ul",
     list(
       items = vcapply(items, glue_cmd, .envir = .envir), id = id,
-      class = class),
+      class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
 }
 
 cli_ol <- function(items = NULL, id = NULL, class = NULL,
-                   .auto_close = TRUE, .envir = parent.frame()) {
+                   .close = TRUE, .auto_close = TRUE,
+                   .envir = parent.frame()) {
   cli__message(
     "ol",
     list(
       items = vcapply(items, glue_cmd, .envir = .envir), id = id,
-      class = class),
+      class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
 }
 
 cli_dl <- function(items = NULL, id = NULL, class = NULL,
-                   .auto_close = TRUE, .envir = parent.frame()) {
+                   .close = TRUE, .auto_close = TRUE,
+                   .envir = parent.frame()) {
   cli__message(
     "dl",
     list(
       items = vcapply(items, glue_cmd, .envir = .envir), id = id,
-      class = class),
+      class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
 }
 

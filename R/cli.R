@@ -201,12 +201,12 @@ cliapp <- R6Class(
       clii_blockquote(self, private, quote, citation, id, class),
 
     ## Lists
-    ul = function(items = NULL, id = NULL, class = NULL)
-      clii_ul(self, private, items, id, class),
-    ol = function(items = NULL, id, class = NULL)
-      clii_ol(self, private, items, id, class),
-    dl = function(items = NULL, id, class = NULL)
-      clii_dl(self, private, items, id, class),
+    ul = function(items = NULL, id = NULL, class = NULL, .close = TRUE)
+      clii_ul(self, private, items, id, class, .close),
+    ol = function(items = NULL, id, class = NULL, .close = TRUE)
+      clii_ol(self, private, items, id, class, .close),
+    dl = function(items = NULL, id, class = NULL, .close = TRUE)
+      clii_dl(self, private, items, id, class, .close),
     it = function(items = NULL, id = NULL, class = NULL)
       clii_it(self, private, items, id, class),
 

@@ -110,7 +110,7 @@ test_that("starting with an item", {
 test_that("ol, with first item", {
   cli_div(theme = list(ol = list()))
   out <- capt0({
-    lid <- cli_ol("foo")
+    lid <- cli_ol("foo", .close = FALSE)
     cli_it(c("bar", "foobar"))
   })
   expect_equal(out, "1. foo\n2. bar\n3. foobar\n")
@@ -120,7 +120,7 @@ test_that("ol, with first item", {
 test_that("ul, with first item", {
   cli_div(theme = list(ul = list("list-style-type" = "*")))
   out <- capt0({
-    lid <- cli_ul("foo")
+    lid <- cli_ul("foo", .close = FALSE)
     cli_it(c("bar", "foobar"))
   })
   expect_equal(out, "* foo\n* bar\n* foobar\n")
@@ -228,7 +228,7 @@ test_that("ul dl", {
 test_that("dl, with first item", {
   cli_div(theme = list(ul = list()))
   out <- capt0({
-    lid <- cli_dl(c(this = "foo"))
+    lid <- cli_dl(c(this = "foo"), .close = FALSE)
     cli_it(c(that = "bar", other = "foobar"))
   })
   expect_equal(out, "this: foo\nthat: bar\nother: foobar\n")

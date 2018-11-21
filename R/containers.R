@@ -108,21 +108,21 @@ clii_par <- function(self, private, id, class) {
 
 ## Lists ------------------------------------------------------------
 
-clii_ul <- function(self, private, items, id, class) {
+clii_ul <- function(self, private, items, id, class, .close) {
   id <- clii__container_start(self, private, "ul", id = id, class = class)
-  if (length(items)) self$end(self$it(items))
+  if (length(items)) { self$it(items); if (.close) self$end(id) }
   invisible(id)
 }
 
-clii_ol <- function(self, private, items, id, class) {
+clii_ol <- function(self, private, items, id, class, .close) {
   id <- clii__container_start(self, private, "ol", id = id, class = class)
-  if (length(items)) self$end(self$it(items))
+  if (length(items)) { self$it(items); if (.close) self$end(id) }
   invisible(id)
 }
 
-clii_dl <- function(self, private, items, id, class) {
+clii_dl <- function(self, private, items, id, class, .close) {
   id <- clii__container_start(self, private, "dl", id = id, class = class)
-  if (length(items)) self$end(self$it(items))
+  if (length(items)) { self$it(items); if (.close) self$end(id) }
   invisible(id)
 }
 
@@ -154,17 +154,15 @@ clii_it <- function(self, private, items, id, class) {
     type <- xml_name(last)
   }
 
-  i <- 1
-  repeat {
-    id <- clii__container_start(self, private, "it", id = id, class = class)
-    if (i > length(items)) break
-    private$item_text(type, names(items)[i], cnt_id, items[[i]])
-    self$end(id)
-    i <- i + 1
-  }
-
-  if (length(items) == 0) {
+  if (length(items) > 0) {
+    for (i in seq_along(items)) {
+      id <- clii__container_start(self, private, "it", id = id, class = class)
+      private$item_text(type, names(items)[i], cnt_id, items[[i]])
+      if (i < length(items)) self$end(id)
+    }
+  } else {
     private$state$delayed_item <- list(type = type, cnt_id = cnt_id)
+    id <- clii__container_start(self, private, "it", id = id, class = class)
   }
 
   invisible(id)
