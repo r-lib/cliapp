@@ -10,5 +10,5 @@ cli_server_default_safe <- function(msg) {
 }
 
 cli_server_callr_handler <- function(msg) {
-  cli_default_handler(msg)
+  cli_server_default(msg)
 }
