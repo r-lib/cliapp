@@ -17,11 +17,11 @@ inline_generic <- function(self, private, class, x) {
 }
 
 inline_transformer <- function(code, envir) {
-  res <- tryCatch(
-    parse(text = code, keep.source = FALSE),
-    error = function(e) e
-  )
-  if (!inherits(res, "error")) return(eval(res, envir = envir))
+  res <- tryCatch({
+    expr <- parse(text = code, keep.source = FALSE)
+    eval(expr, envir = envir)
+  }, error = function(e) e)
+  if (!inherits(res, "error")) return(res)
 
   code <- glue_collapse(code, "\n")
   m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
@@ -39,11 +39,11 @@ inline_transformer <- function(code, envir) {
 }
 
 cmd_transformer <- function(code, envir) {
-  res <- tryCatch(
-    parse(text = code, keep.source = FALSE),
-    error = function(e) e
-  )
-  if (!inherits(res, "error")) return(eval(res, envir = envir))
+  res <- tryCatch({
+    expr <- parse(text = code, keep.source = FALSE)
+    eval(expr, envir = envir)
+  }, error = function(e) e)
+  if (!inherits(res, "error")) return(res)
 
   code <- glue_collapse(code, "\n")
   m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
