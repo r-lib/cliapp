@@ -12,6 +12,12 @@ cliappenv <- new.env()
 cliappenv$stack <- list()
 cliappenv$pid <- Sys.getpid()
 
+.onLoad <- function(libname, pkgname) {
+  if (is.null(getOption("callr.condition_handler_myclass"))) {
+    options(callr.condition_handler_myclass = cli_server_callr_handler)
+  }
+}
+
 #' Start, stop, query the default cli application
 #'
 #' `start_app` creates an app, and places it on the top of the app stack.

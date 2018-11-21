@@ -1,6 +1,9 @@
 
 context("cli inline")
 
+setup(start_app())
+teardown(stop_app())
+
 test_that("inline classes", {
   classes <- c(
     "emph", "strong", "code", "pkg", "fun", "arg", "key", "file", "path",
@@ -20,11 +23,11 @@ test_that("inline classes", {
       )
     )
 
-    clix$div(theme = special_style)
+    cli_div(theme = special_style)
     withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
       txt <- glue::glue("This is {<class> it} really",
                         .open = "<", .close = ">")
-      out <- capt0(clix$text(txt))
+      out <- capt0(cli_text(txt))
       expect_true(crayon::has_style(out))
       expect_match(crayon::strip_style(out), "<<<it>>>", info = class)
       expect_match(out, start(crayon::make_style("cyan")), fixed = TRUE, info = class)

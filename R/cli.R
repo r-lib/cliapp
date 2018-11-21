@@ -54,7 +54,7 @@
 #' app$progress_bar(...)
 #'
 #' app$list_themes()
-#' app$add_theme(theme, .auto_remove = TRUE, .envir = parent.frame())
+#' app$add_theme(theme)
 #' app$remove_theme(id)
 #' ```
 #'
@@ -81,9 +81,6 @@
 #'    screen width.
 #' * `.auto_close`: Whether to automatically close a container, when the
 #'   caller function exits (the `.envir` environment is removed from the
-#'   stack).
-#' * `.auto_remove`: Whether to automatically remove the theme when the
-#'   called function exits (the `.envir` environment is removed from the
 #'   stack).
 #' * `items`: Character vector, each element will be a list item.
 #'
@@ -163,99 +160,76 @@ cliapp <- R6Class(
     ## Themes
     list_themes = function()
       clii_list_themes(self, private),
-    add_theme = function(theme, .auto_remove = TRUE, .envir = parent.frame())
-      clii_add_theme(self, private, theme, .auto_remove, .envir),
+    add_theme = function(theme)
+      clii_add_theme(self, private, theme),
     remove_theme = function(id)
       clii_remove_theme(self, private, id),
 
     ## Close container(s)
-    end = function(id = NULL)
+    end = function(id)
       clii_end(self, private, id),
 
     ## Generic container
-    div = function(id = NULL, class = NULL, theme = NULL,
-                   .auto_close = TRUE, .envir = parent.frame())
-      clii_div(self, private, id, class, theme, .auto_close, .envir),
+    div = function(id, class = NULL, theme = NULL)
+      clii_div(self, private, id, class, theme),
 
     ## Paragraphs
-    par = function(id = NULL, class = NULL, .auto_close = TRUE,
-                   .envir = parent.frame())
-      clii_par(self, private, id, class, .auto_close = .auto_close,
-              .envir = .envir),
+    par = function(id, class = NULL)
+      clii_par(self, private, id, class),
 
     ## Text, wrapped
-    text = function(..., .envir = parent.frame())
-      clii_text(self, private, ..., .envir = .envir),
+    text = function(...)
+      clii_text(self, private, ...),
 
     ## Text, not wrapped
-    verbatim = function(..., .envir = parent.frame())
-      clii_verbatim(self, private, ..., .envir = .envir),
+    verbatim = function(...)
+      clii_verbatim(self, private, ...),
 
     ## Markdow(ish) text, wrapped: emphasis, strong emphasis, links, code
-    md_text = function(..., .envir = parent.frame())
-      clii_md_text(self, private, ..., .envir = .envir),
+    md_text = function(...)
+      clii_md_text(self, private, ...),
 
     ## Headers
-    h1 = function(text, id = NULL, class = NULL, .envir = parent.frame())
-      clii_h1(self, private, text, id, class, .envir = .envir),
-    h2 = function(text, id = NULL, class = NULL, .envir = parent.frame())
-      clii_h2(self, private, text, id, class, .envir = .envir),
-    h3 = function(text, id = NULL, class = NULL, .envir = parent.frame())
-      clii_h3(self, private, text, id, class, .envir = .envir),
+    h1 = function(text, id, class = NULL)
+      clii_h1(self, private, text, id, class),
+    h2 = function(text, id, class = NULL)
+      clii_h2(self, private, text, id, class),
+    h3 = function(text, id, class = NULL)
+      clii_h3(self, private, text, id, class),
 
     ## Block quote
-    blockquote = function(quote, citation = NULL, id = NULL, class = NULL)
+    blockquote = function(quote, citation = NULL, id, class = NULL)
       clii_blockquote(self, private, quote, citation, id, class),
 
     ## Lists
-    ul = function(items = NULL, id = NULL, class = NULL,
-                  .auto_close = TRUE, .envir = parent.frame())
-      clii_ul(self, private, items, id, class, .auto_close = .auto_close,
-             .envir = .envir),
-    ol = function(items = NULL, id = NULL, class = NULL,
-                  .auto_close = TRUE, .envir = parent.frame())
-      clii_ol(self, private, items, id, class, .auto_close = .auto_close,
-             .envir = .envir),
-    dl = function(items = NULL, id = NULL, class = NULL,
-                  .auto_close = TRUE, .envir = parent.frame())
-      clii_dl(self, private, items, id, class, .auto_close = .auto_close,
-             .envir = .envir),
-    it = function(items = NULL, id = NULL, class = NULL,
-                  .auto_close = TRUE, .envir = parent.frame())
-      clii_it(self, private, items, id, class, .auto_close = .auto_close,
-             .envir = .envir),
+    ul = function(items = NULL, id = NULL, class = NULL)
+      clii_ul(self, private, items, id, class),
+    ol = function(items = NULL, id, class = NULL)
+      clii_ol(self, private, items, id, class),
+    dl = function(items = NULL, id, class = NULL)
+      clii_dl(self, private, items, id, class),
+    it = function(items = NULL, id = NULL, class = NULL)
+      clii_it(self, private, items, id, class),
 
     ## Code
-    code = function(lines, id = NULL, class = NULL,
-                    .auto_close = TRUE, .envir = parent.frame())
-      clii_code(self, private, lines, class, .auto_close = .auto_close,
-               .envir = .envir),
+    code = function(lines, id, class = NULL)
+      clii_code(self, private, lines, class),
 
     ## Tables
-    table = function(cells, id = NULL, class = NULL)
+    table = function(cells, id, class = NULL)
       clii_table(self, private, cells, class),
 
     ## Alerts
-    alert = function(text, id = NULL, class = NULL, wrap = FALSE,
-                     .envir = parent.frame())
-      clii_alert(self, private, "alert", text, id, class, wrap,
-                .envir = .envir),
-    alert_success = function(text, id = NULL, class = NULL, wrap = FALSE,
-                             .envir = parent.frame())
-      clii_alert(self, private, "alert-success", text, id, class, wrap,
-                .envir = .envir),
-    alert_danger = function(text, id = NULL, class = NULL, wrap = FALSE,
-                            .envir = parent.frame())
-      clii_alert(self, private, "alert-danger", text, id, class, wrap,
-                .envir = .envir),
-    alert_warning = function(text, id = NULL, class = NULL, wrap = FALSE,
-                             .envir = parent.frame())
-      clii_alert(self, private, "alert-warning", text, id, class, wrap,
-                .envir = .envir),
-    alert_info = function(text, id = NULL, class = NULL, wrap = FALSE,
-                          .envir = parent.frame())
-      clii_alert(self, private, "alert-info", text, id, class, wrap,
-                .envir = .envir),
+    alert = function(text, id, class = NULL, wrap = FALSE)
+      clii_alert(self, private, "alert", text, id, class, wrap),
+    alert_success = function(text, id, class = NULL, wrap = FALSE)
+      clii_alert(self, private, "alert-success", text, id, class, wrap),
+    alert_danger = function(text, id, class = NULL, wrap = FALSE)
+      clii_alert(self, private, "alert-danger", text, id, class, wrap),
+    alert_warning = function(text, id, class = NULL, wrap = FALSE)
+      clii_alert(self, private, "alert-warning", text, id, class, wrap),
+    alert_info = function(text, id, class = NULL, wrap = FALSE)
+      clii_alert(self, private, "alert-info", text, id, class, wrap),
 
     ## Progress bars
     progress_bar = function(...)
@@ -277,19 +251,17 @@ cliapp <- R6Class(
     get_style = function()
       tail(private$state$styles, 1)[[1]],
 
-    xtext = function(..., .list = NULL, .envir, indent = 0)
-      clii__xtext(self, private, ..., .list = .list,
-                 .envir = .envir, indent = indent),
+    xtext = function(..., .list = NULL, indent = 0)
+      clii__xtext(self, private, ..., .list = .list, indent = indent),
 
     vspace = function(n = 1)
       clii__vspace(self, private, n),
 
-    inline = function(..., .list = NULL, .envir)
-      clii__inline(self, private, ..., .list = .list, .envir = .envir),
+    inline = function(..., .list = NULL)
+      clii__inline(self, private, ..., .list = .list),
 
-    item_text = function(type, name, cnt_id, .envir, ..., .list = NULL)
-      clii__item_text(self, private, type, name, cnt_id, .envir, ...,
-                     .list = .list),
+    item_text = function(type, name, cnt_id, ..., .list = NULL)
+      clii__item_text(self, private, type, name, cnt_id, ..., .list = .list),
 
     get_width = function()
       clii__get_width(self, private),
@@ -338,40 +310,41 @@ clii_init <- function(self, private, theme, output) {
 
 #' @importFrom fansi strwrap_ctl
 
-clii_text <- function(self, private, ..., .envir) {
-  private$xtext(..., .envir = .envir)
+clii_text <- function(self, private, ...) {
+  private$xtext(...)
 }
 
-clii_verbatim <- function(self, private, ..., .envir) {
+clii_verbatim <- function(self, private, ...) {
   style <- private$get_style()$main
-  text <- private$inline(..., .envir = .envir)
+  text <- private$inline(...)
   if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)
 }
 
-clii_md_text <- function(self, private, ..., .envir) {
+clii_md_text <- function(self, private, ...) {
   stop("Markdown text is not implemented yet")
 }
 
 ## Headers ----------------------------------------------------------
 
-clii_h1 <- function(self, private, text, id, class, .envir) {
-  clii__header(self, private, "h1", text, id, class, .envir)
+clii_h1 <- function(self, private, text, id, class) {
+  clii__header(self, private, "h1", text, id, class)
 }
 
-clii_h2 <- function(self, private, text, id, class, .envir) {
-  clii__header(self, private, "h2", text, id, class, .envir)
+clii_h2 <- function(self, private, text, id, class) {
+  clii__header(self, private, "h2", text, id, class)
 }
 
-clii_h3 <- function(self, private, text, id, class, .envir) {
-  clii__header(self, private, "h3", text, id, class, .envir)
+clii_h3 <- function(self, private, text, id, class) {
+  clii__header(self, private, "h3", text, id, class)
 }
 
-clii__header <- function(self, private, type, text, id, class, .envir) {
-  clii__container_start(self, private, type, id = id, class = class,
-                       .auto_close = TRUE, .envir = environment())
-  text <- private$inline(text, .envir = .envir)
+clii__header <- function(self, private, type, text, id, class) {
+  id <- new_uuid()
+  clii__container_start(self, private, type, id = id, class = class)
+  on.exit(clii__container_end(self, private, id), add = TRUE)
+  text <- private$inline(text)
   style <- private$get_style()$main
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
@@ -392,11 +365,11 @@ clii_table <- function(self, private, cells, id, class) {
 
 ## Alerts -----------------------------------------------------------
 
-clii_alert <- function(self, private, type, text, id, class, wrap, .envir) {
+clii_alert <- function(self, private, type, text, id, class, wrap) {
   clii__container_start(self, private, "div", id = id,
-                       class = paste(class, "alert", type),
-                       .auto_close = TRUE, .envir = environment())
-  text <- private$inline(text, .envir = .envir)
+                       class = paste(class, "alert", type))
+  on.exit(clii__container_end(self, private, id), add = TRUE)
+  text <- private$inline(text)
   style <- private$get_style()
   text[1] <- paste0(style$before$content, text[1])
   text[length(text)] <- paste0(text[length(text)], style$after$content)

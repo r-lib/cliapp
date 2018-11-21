@@ -1,22 +1,25 @@
 
 context("cli progress bars")
 
+setup(start_app())
+teardown(stop_app())
+
 test_that("progress bars", {
   x <- 100
 
   withr::with_options(
     list(cli.width = 40, crayon.enabled = FALSE, crayon.colors = 1), {
     out <- capt0({
-      clix$verbatim("so far so good: {x}")
-      bar <- clix$progress_bar(total = 5, force = TRUE, show_after = 0)
+      cli_verbatim("so far so good: {x}")
+      bar <- cli_progress_bar(total = 5, force = TRUE, show_after = 0)
       bar$tick()
       bar$tick()
-      clix$verbatim("still very good: {x}!")
+      cli_verbatim("still very good: {x}!")
       bar$tick()
-      clix$text(strrep("1234567890 ", 6))
+      cli_text(strrep("1234567890 ", 6))
       bar$tick()
       bar$tick()
-      clix$verbatim("aaaaand we are done")
+      cli_verbatim("aaaaand we are done")
     })
   })
 
