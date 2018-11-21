@@ -21,6 +21,7 @@ Imports:
     utils,
     withr,
     xml2
-Suggests: 
+Suggests:
+    callr,
     testthat
 Encoding: UTF-8

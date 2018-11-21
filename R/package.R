@@ -14,7 +14,7 @@ cliappenv$pid <- Sys.getpid()
 
 .onLoad <- function(libname, pkgname) {
   if (is.null(getOption("callr.condition_handler_cliapp_message"))) {
-    options(callr.condition_handler_cliapp_message = cli_server_callr_handler)
+    options(callr.condition_handler_cliapp_message = cli__default_handler)
   }
 }
 

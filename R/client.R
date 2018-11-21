@@ -128,7 +128,7 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
 
   cond <- list(message = paste("cli message", type),
                type = type, args = args, pid = cliappenv$pid)
-  class(cond) <- c("cliapp_message", "condition")
+  class(cond) <- c("cliapp_message", "callr_message", "condition")
 
   withRestarts({
     signalCondition(cond)
