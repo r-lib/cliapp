@@ -62,8 +62,9 @@ cmd_transformer <- function(code, envir) {
 
 glue_cmd <- function(..., .envir) {
   ## This makes a copy that can refer to self and private
+  str <- unlist(list(...), use.names = FALSE)
   environment(cmd_transformer) <- environment()
-  args <- c(list(...), list(.envir = .envir, .transformer = cmd_transformer))
+  args <- c(str, list(.envir = .envir, .transformer = cmd_transformer))
   do.call(glue, args)
 }
 
