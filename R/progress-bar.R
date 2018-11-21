@@ -6,8 +6,7 @@ clii_progress_bar <- function(self, private, id, ...) {
   if (!nzchar(stream)) stream <- stdout()
   bar <- progress_bar$new(
     ..., stream = stream,
-    width = private$get_width(),
-    message_class = c("cliapp_message", "callr_message"))
+    width = private$get_width())
   stbar <- list(bar)
   names(stbar) <- id
   private$progress_bars <- c(private$progress_bars, stbar)
