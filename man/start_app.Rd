@@ -14,9 +14,9 @@ stop_app(app = NULL)
 default_app()
 }
 \arguments{
-\item{theme}{Theme to use, passed to the [cliapp] initializer.}
+\item{theme}{Theme to use, passed to the \link{cliapp} initializer.}
 
-\item{output}{How to print the output, passed to [cliapp] initializer.}
+\item{output}{How to print the output, passed to \link{cliapp} initializer.}
 
 \item{.auto_close}{Whether to stop the app, when the calling frame
 is destroyed.}
@@ -24,19 +24,19 @@ is destroyed.}
 \item{.envir}{The environment to use, instead of the calling frame,
 to trigger the stop of the app.}
 
-\item{app}{App to stop. If `NULL`, the current default app is stopped.
+\item{app}{App to stop. If \code{NULL}, the current default app is stopped.
 Otherwise we find the supplied app in the app stack, and remote it,
 together with all the apps above it.}
 }
 \value{
-`start_app` returns the new app, `default_app` returns the default app.
-  `stop_app` does not return anything.
+\code{start_app} returns the new app, \code{default_app} returns the default app.
+\code{stop_app} does not return anything.
 }
 \description{
-`start_app` creates an app, and places it on the top of the app stack.
+\code{start_app} creates an app, and places it on the top of the app stack.
 }
 \details{
-`stop_app` removes the top app, or multiple apps from the app stack.
+\code{stop_app} removes the top app, or multiple apps from the app stack.
 
-`default_app` returns the default app, the one on the top of the stack.
+\code{default_app} returns the default app, the one on the top of the stack.
 }

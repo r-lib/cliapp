@@ -6,34 +6,32 @@
 \description{
 A cli theme is a named list. The names of the list elements are
 CSS selectors that define whith CLI elements each style element applies
-to. See <https://www.w3schools.com/cssref/css_selectors.asp> for a
+to. See \url{https://www.w3schools.com/cssref/css_selectors.asp} for a
 reference on CSS selectors. We will also show some examples below.
 }
 \details{
 Themes can come from three sources:
-* The builtin theme of the cli package.
-* The theme from the `cli.theme` option. (At the time when the
-  `cliapp` object is created.)
-* Themes added with he `add_theme()` method.
+\itemize{
+\item The builtin theme of the cli package.
+\item The theme from the \code{cli.theme} option. (At the time when the
+\code{cliapp} object is created.)
+\item Themes added with he \code{add_theme()} method.
+}
 }
 \section{Examples}{
 
 Color of headers, that are only active in paragraphs with an
-'output' class:
-```
-list(
+'output' class:\preformatted{list(
   "par.output h1" = list("background-color" = "red", color = "#e0e0e0"),
   "par.output h2" = list("background-color" = "orange", color = "#e0e0e0"),
   "par.output h3" = list("background-color" = "blue", color = "#e0e0e0")
 )
-```
+}
 
-Create a custom alert type:
-```
-list(
+Create a custom alert type:\preformatted{list(
   ".alert-start::before" = list(content = symbol$play),
   ".alert-stop::before"  = list(content = symbol$stop)
 )
-```
+}
 }
 

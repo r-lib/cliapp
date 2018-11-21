@@ -25,3 +25,4 @@ Suggests:
     callr,
     testthat
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
