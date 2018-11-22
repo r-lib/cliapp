@@ -2,6 +2,9 @@
 context("subprocess")
 
 test_that("events are properly generated", {
+  ## This needs callr >= 3.0.0.90001, which is not yet on CRAN
+  if (packageVersion("callr") < "3.0.0.9001") skip("Need newer callr")
+
   do <- function() {
     cliapp::cli_div()
     cliapp::cli_h1("title")
