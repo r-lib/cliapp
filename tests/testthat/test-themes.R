@@ -38,8 +38,8 @@ test_that("explicit formatter is used, and combined", {
   expect_match(crayon::strip_style(out), "(((<<it>>)))", fixed = TRUE)
 })
 
-test_that("default theme", {
-  def <- default_theme()
+test_that("simple theme", {
+  def <- simple_theme()
   expect_true(is.list(def))
   expect_false(is.null(names(def)))
   expect_true(all(names(def) != ""))
