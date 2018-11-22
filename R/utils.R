@@ -17,7 +17,7 @@ new_uuid <- (function() {
   cnt <- 0
   function() {
     cnt <<- cnt + 1
-    paste0("cli", cnt)
+    paste0("cli-", cliappenv$pid, "-", cnt)
   }
 })()
 
@@ -35,4 +35,20 @@ dedent <- function(x, n = 2) {
   d_n_space <- diff(c(0, n_space))
   first_not_space <- head(c(which(d_n_space == 0), n + 1), 1)
   col_substr(x, first_not_space, nchar(x))
+}
+
+strrep <- function(x, times) {
+  x <- as.character(x)
+  if (length(x) == 0L) return(x)
+  r <- .mapply(
+    function(x, times) {
+      if (is.na(x) || is.na(times)) return(NA_character_)
+      if (times <= 0L) return("")
+      paste0(replicate(times, x), collapse = "")
+    },
+    list(x = x, times = times),
+    MoreArgs = list()
+  )
+
+  unlist(r, use.names = FALSE)
 }

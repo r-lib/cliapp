@@ -35,33 +35,26 @@
 #' @importFrom cli symbol
 NULL
 
-cli_list_themes <- function(self, private) {
+clii_list_themes <- function(self, private) {
   private$raw_themes
 }
 
-cli_add_theme <- function(self, private, theme, .auto_remove, .envir) {
+clii_add_theme <- function(self, private, theme) {
   id <- new_uuid()
   private$raw_themes <-
     c(private$raw_themes, structure(list(theme), names = id))
   private$theme <- theme_create(private$raw_themes)
-  if (.auto_remove && !identical(.envir, globalenv())) {
-    defer(
-      cli_remove_theme(self, private, id),
-      envir = .envir,
-      priority = "first"
-    )
-  }
   id
 }
 
-cli_remove_theme <- function(self, private, id) {
+clii_remove_theme <- function(self, private, id) {
   if (! id %in% names(private$raw_themes)) return(invisible(FALSE))
   private$raw_themes[[id]] <- NULL
   private$theme <- theme_create(private$raw_themes)
   invisible(TRUE)
 }
 
-cli_builtin_theme <- function() {
+clii_builtin_theme <- function() {
   list(
     body = list(),
 
@@ -190,7 +183,7 @@ create_formatter <- function(x) {
 
 #' @importFrom xml2 xml_path xml_find_all
 
-cli__match_theme <- function(self, private, element_path) {
+clii__match_theme <- function(self, private, element_path) {
   el <- xml_find_first(private$state$doc, element_path)
   paths <- lapply(
     private$theme$xpath,

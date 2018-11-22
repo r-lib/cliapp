@@ -1,5 +1,5 @@
 
-#' @importFrom glue glue
+#' @importFrom glue glue glue_collapse
 
 inline_list <- NULL
 
@@ -8,31 +8,22 @@ inline_list <- NULL
 if (getRversion() >= "2.15.1") globalVariables(c("self", "private"))
 
 inline_generic <- function(self, private, class, x) {
-  cli__container_start(self, private, "span", .auto_close = TRUE,
-                       .envir = environment(), class = class)
+  id <- clii__container_start(self, private, "span", class = class)
+  on.exit(clii__container_end(self, private, id), add = TRUE)
   style <- private$get_style()
   xx <- paste0(style$before$content, x, style$after$content)
   if (!is.null(style$main$fmt)) xx <- style$main$fmt(xx)
   xx
 }
 
-collapse <- function(...) {
-  glue_ver <- package_version(getNamespaceVersion(asNamespace("glue")))
-  if (glue_ver <= package_version("1.2.0")) {
-    getNamespace("glue")$collapse(...)
-  } else  {
-    getNamespace("glue")$glue_collapse(...)
-  }
-}
-
 inline_transformer <- function(code, envir) {
-  res <- tryCatch(
-    parse(text = code, keep.source = FALSE),
-    error = function(e) e
-  )
-  if (!inherits(res, "error")) return(eval(res, envir = envir))
+  res <- tryCatch({
+    expr <- parse(text = code, keep.source = FALSE)
+    eval(expr, envir = envir)
+  }, error = function(e) e)
+  if (!inherits(res, "error")) return(res)
 
-  code <- collapse(code, "\n")
+  code <- glue_collapse(code, "\n")
   m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
   has_match <- m != -1
   if (!has_match) stop(res)
@@ -42,14 +33,44 @@ inline_transformer <- function(code, envir) {
   captures <- substring(code, starts, ends)
   funname <- captures[[1]]
   text <- captures[[2]]
+
   out <- glue(text, .envir = envir, .transformer = inline_transformer)
   inline_generic(self, private, funname, out)
 }
 
-cli__inline <- function(self, private, ..., .envir, .list) {
+cmd_transformer <- function(code, envir) {
+  res <- tryCatch({
+    expr <- parse(text = code, keep.source = FALSE)
+    eval(expr, envir = envir)
+  }, error = function(e) e)
+  if (!inherits(res, "error")) return(res)
+
+  code <- glue_collapse(code, "\n")
+  m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
+  has_match <- m != -1
+  if (!has_match) stop(res)
+
+  starts <- attr(m, "capture.start")
+  ends <- starts + attr(m, "capture.length") - 1L
+  captures <- substring(code, starts, ends)
+  funname <- captures[[1]]
+  text <- captures[[2]]
+
+  out <- glue(text, .envir = envir, .transformer = cmd_transformer)
+  paste0("{", funname, " ", out, "}")
+}
+
+glue_cmd <- function(..., .envir) {
+  ## This makes a copy that can refer to self and private
+  str <- unlist(list(...), use.names = FALSE)
+  environment(cmd_transformer) <- environment()
+  args <- c(str, list(.envir = .envir, .transformer = cmd_transformer))
+  do.call(glue, args)
+}
+
+clii__inline <- function(self, private, ..., .list) {
   ## This makes a copy that can refer to self and private
   environment(inline_transformer) <- environment()
-  do.call(
-    glue,
-    c(list(...), .list, list(.envir = .envir, .transformer = inline_transformer)))
+  args <- c(list(...), .list, list(.transformer = inline_transformer))
+  do.call(glue, args)
 }

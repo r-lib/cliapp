@@ -9,20 +9,21 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/r-lib/cliapp#readme
 BugReports: https://github.com/r-lib/cliapp/issues
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Imports:
     cli,
     crayon,
     fansi,
-    glue,
-    progress (>= 1.2.0.9000),
+    glue (>= 1.3.0),
+    prettycode,
+    progress (>= 1.2.0),
     R6,
     selectr,
     utils,
     withr,
     xml2
-Suggests: 
+Suggests:
+    callr,
     testthat
-Remotes:
-    r-lib/progress
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
