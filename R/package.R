@@ -62,7 +62,7 @@ start_app <- function(theme = getOption("cli.theme"),
     defer(stop_app(app = app), envir = .envir, priority = "first")
   }
 
-  app
+  invisible(app)
 }
 
 #' @export
