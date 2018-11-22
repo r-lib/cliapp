@@ -7,19 +7,14 @@
 cli_verbatim(..., .envir = parent.frame())
 }
 \arguments{
-\item{...}{The text to show, in character vectors. They will be
-concatenated into a single string. Newlines are preserved.}
+\item{...}{The text to show, in character vectors. Each element is
+printed on a new line.}
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
 }
 \description{
-It is not wrapped, but printed as is. It may contain inline markup.
-(See \link{inline-markup}.)
+It is not wrapped, but printed as is.
 }
 \examples{
-cli_verbatim("This has\\nthree\\nlines")
-
-## Markup
-n <- 3
-cli_verbatim("This has\\n{strong {n}}\\nlines")
+cli_verbatim("This has\\nthree", "lines")
 }

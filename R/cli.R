@@ -164,9 +164,9 @@ clii_text <- function(self, private, ...) {
   private$xtext(...)
 }
 
-clii_verbatim <- function(self, private, ...) {
+clii_verbatim <- function(self, private, ..., .envir) {
   style <- private$get_style()$main
-  text <- private$inline(...)
+  text <- paste(unlist(list(...), use.names = FALSE), collapse = "\n")
   if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)

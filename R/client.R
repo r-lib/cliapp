@@ -38,23 +38,18 @@ cli_text <- function(..., .envir = parent.frame()) {
 
 #' CLI verbatim text
 #'
-#' It is not wrapped, but printed as is. It may contain inline markup.
-#' (See [inline-markup].)
+#' It is not wrapped, but printed as is.
 #' 
-#' @param ... The text to show, in character vectors. They will be
-#'   concatenated into a single string. Newlines are preserved.
+#' @param ... The text to show, in character vectors. Each element is
+#'   printed on a new line.
 #' @param .envir Environment to evaluate the glue expressions in.
 #' 
 #' @export
 #' @examples
-#' cli_verbatim("This has\nthree\nlines")
-#'
-#' ## Markup
-#' n <- 3
-#' cli_verbatim("This has\n{strong {n}}\nlines")
+#' cli_verbatim("This has\nthree", "lines")
 
 cli_verbatim <- function(..., .envir = parent.frame()) {
-  cli__message("verbatim", as.list(glue_cmd(..., .envir = .envir)))
+  cli__message("verbatim", c(list(...), list(.envir = .envir)))
 }
 
 #' CLI headers

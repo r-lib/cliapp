@@ -10,16 +10,16 @@ test_that("progress bars", {
   withr::with_options(
     list(cli.width = 40, crayon.enabled = FALSE, crayon.colors = 1), {
     out <- capt0({
-      cli_verbatim("so far so good: {x}")
+      cli_text("so far so good: {x}")
       bar <- cli_progress_bar(total = 5, force = TRUE, show_after = 0)
       bar$tick()
       bar$tick()
-      cli_verbatim("still very good: {x}!")
+      cli_text("still very good: {x}!")
       bar$tick()
       cli_text(strrep("1234567890 ", 6))
       bar$tick()
       bar$tick()
-      cli_verbatim("aaaaand we are done")
+      cli_text("aaaaand we are done")
     })
   })
 
