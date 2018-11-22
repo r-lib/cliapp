@@ -4,7 +4,13 @@
 \alias{simple_theme}
 \title{A simple CLI theme}
 \usage{
-simple_theme()
+simple_theme(dark = "auto")
+}
+\arguments{
+\item{dark}{Whether the theme should be optiomized for a dark
+background. If \code{"auto"}, then cliapp will try to detect this.
+Detection usually works in recent RStudio versions, and in iTerm
+on macOS, but not on other platforms.}
 }
 \description{
 Note that this is in addition to the builtin theme. To use this theme,
