@@ -397,9 +397,9 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' A progress bar using the progress package
 #'
 #' @param ... All arguments are passed to the constuctor of the
-#' [progress::progess_bar] class.
+#' [progress::progress_bar] class.
 #' @return A remote progress bar object that can be used the same way
-#' as [progress::progess_bar], see examples below.
+#' as [progress::progress_bar], see examples below.
 #' 
 #' @export
 #' @examples

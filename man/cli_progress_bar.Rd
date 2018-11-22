@@ -8,11 +8,11 @@ cli_progress_bar(...)
 }
 \arguments{
 \item{...}{All arguments are passed to the constuctor of the
-\link[progress:progess_bar]{progress::progess_bar} class.}
+\link[progress:progress_bar]{progress::progress_bar} class.}
 }
 \value{
 A remote progress bar object that can be used the same way
-as \link[progress:progess_bar]{progress::progess_bar}, see examples below.
+as \link[progress:progress_bar]{progress::progress_bar}, see examples below.
 }
 \description{
 A progress bar using the progress package
