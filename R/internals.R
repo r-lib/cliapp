@@ -75,5 +75,7 @@ clii__vspace <- function(self, private, n) {
 }
 
 clii__message <- function(..., domain = NULL, appendLF = TRUE) {
-  message(..., domain = domain, appendLF = appendLF)
+  msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
+  msg <- crayon::reset(msg)
+  message(msg, appendLF = FALSE)
 }
