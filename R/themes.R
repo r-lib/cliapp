@@ -81,7 +81,7 @@ clii_builtin_theme <- function() {
       content = paste0(crayon::red(symbol$cross), " ")
     ),
     ".alert-warning::before" = list(
-      content = paste0(crayon::yellow(symbol$warning), " ")
+      content = paste0(crayon::yellow("!"), " ")
     ),
     ".alert-info::before" = list(
       content = paste0(crayon::cyan(symbol$info), " ")

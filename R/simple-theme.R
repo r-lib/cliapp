@@ -107,7 +107,7 @@ simple_theme <- function(dark = "auto") {
       color = "orange",
       "font-weight" = "bold"),
     ".alert-warning::before" = list(
-      content = paste0(symbol$warning, " ")
+      content = paste0("!", " ")
     ),
 
     ".alert-success::before" = list(
