@@ -15,6 +15,11 @@
 #' cli_div(theme = cliapp::simple_theme())
 #' ```
 #'
+#' @param dark Whether the theme should be optiomized for a dark
+#'   background. If `"auto"`, then cliapp will try to detect this.
+#'   Detection usually works in recent RStudio versions, and in iTerm
+#'   on macOS, but not on other platforms.
+#'
 #' @export
 #' @examples
 #' cli_div(theme = cliapp::simple_theme())
@@ -57,7 +62,20 @@
 #'
 #' cli_end()
 
-simple_theme <- function() {
+simple_theme <- function(dark = "auto") {
+
+  if (dark == "auto") {
+    dark <- if (Sys.getenv("RSTUDIO", "0") == "1") {
+      tryCatch(
+        rstudioapi::getThemeInfo()$dark,
+        error = function(x) FALSE)
+    } else if (is_iterm()) {
+      is_iterm_dark()
+    } else {
+      FALSE
+    }
+  }
+
   list(
     h1 = list(
       "margin-top" = 1,
@@ -107,22 +125,22 @@ simple_theme <- function() {
       "font-weight" = "bold"),
     span.version = list(color = "blue"),
 
-    .code = simple_theme_code(),
+    .code = simple_theme_code(dark),
     "span.code::before" = list(content = "`"),
     "span.code::after" = list(content = "`"),
 
     ".r-code" = list(
-      fmt = simple_theme_r_code,
+      fmt = simple_theme_r_code(dark),
       "margin-top" = 1,
       "margin-bottom" = 1),
 
     span.emph = simple_theme_emph(),
     span.strong = list("font-weight" = "bold", "font-style" = "italic"),
 
-    span.fun = simple_theme_code(),
+    span.fun = simple_theme_code(dark),
     "span.fun::after" = list(content = "()"),
-    span.arg = simple_theme_code(),
-    span.key = simple_theme_code(),
+    span.arg = simple_theme_code(dark),
+    span.key = simple_theme_code(dark),
     "span.key::before" = list(content = "<"),
     "span.key::after" = list(content = ">"),
     span.file = simple_theme_file(),
@@ -131,8 +149,8 @@ simple_theme <- function() {
     span.url = simple_theme_url(),
     "span.url::before" = list(content = "<"),
     "span.url::after" = list(content = ">"),
-    span.var = simple_theme_code(),
-    span.envvar = simple_theme_code(),
+    span.var = simple_theme_code(dark),
+    span.envvar = simple_theme_code(dark),
 
     span.timestamp = list(color = "grey"),
     "span.timestamp::before" = list(
@@ -150,20 +168,56 @@ simple_theme_url <- function() {
   list(color = "blue")
 }
 
-simple_theme_code <- function() {
-  list("background-color" = "#232323", color = "#f0f0f0")
+simple_theme_code <- function(dark) {
+  if (dark) {
+    list("background-color" = "#232323", color = "#f0f0f0")
+  } else{
+    list("background-color" = "#f8f8f8", color = "#202020")
+  }
 }
 
 simple_theme_file <- function() {
   list(color = "blue")
 }
 
-simple_theme_r_code <- function(x) {
-  lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
-  code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
-  len <- fansi::nchar_ctl(code)
-  padded <- paste0(" ", code, strrep(" ", max(len) - len), " ")
-  crayon::make_style("#232323", bg = TRUE)(
-    crayon::make_style("#f0f0f0")(padded)
-  )
+simple_theme_r_code <- function(dark) {
+  dark <- dark
+  style <- if (dark) {
+    crayon::combine_styles(
+      crayon::make_style("#232323", bg = TRUE),
+      crayon::make_style("#f0f0f0")
+    )
+  } else {
+    crayon::combine_styles(
+      crayon::make_style("#f8f8f8", bg = TRUE),
+      crayon::make_style("#202020")
+    )
+  }
+  function(x) {
+    lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
+    code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
+    len <- fansi::nchar_ctl(code)
+    padded <- paste0(" ", code, strrep(" ", max(len) - len), " ")
+    style(padded)
+  }
+}
+
+is_iterm <- function() {
+  isatty(stdout()) && Sys.getenv("TERM_PROGRAM", "") == "iTerm.app"
+}
+
+is_iterm_dark <- function() {
+  tryCatch(
+    error = function(x) FALSE, {
+      osa <- '
+        tell application "iTerm2"
+          tell current session of current window
+            get background color
+          end tell
+        end tell
+      '
+      out <- system2("osascript", c("-e", shQuote(osa)), stdout = TRUE)
+      nums <- scan(text = gsub(",", "", out), quiet = TRUE)
+      mean(nums) < 20000
+  })
 }
