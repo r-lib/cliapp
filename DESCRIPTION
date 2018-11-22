@@ -24,6 +24,7 @@ Imports:
     xml2
 Suggests:
     callr,
+    rstudioapi,
     testthat
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
