@@ -1,5 +1,5 @@
 
 all: README.md
 
-README.md: README.Rmd
-	Rscript -e "library(knitr); knit('$<', output = '$@', quiet = TRUE)"
+README.md: README.Rmd header.md
+	Rscript -e "rmarkdown::render('$<')"
