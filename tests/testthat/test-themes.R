@@ -55,8 +55,10 @@ test_that("user's override", {
   expect_match(out, "custom:")
   stop_app()
 
-  start_app(theme = custom, user_theme = override)
-  out <- capt0(cli_alert("Alert!"))
-  expect_match(out, "override:")
-  stop_app()
+  withr::with_options(list(cli.user_theme = override), {
+    start_app(theme = custom)
+    out <- capt0(cli_alert("Alert!"))
+    expect_match(out, "override:")
+    stop_app()
+  })
 })
