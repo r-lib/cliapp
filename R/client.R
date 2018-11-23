@@ -89,7 +89,8 @@ cli_h3 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
 
 #' Generic CLI container
 #'
-#' See [containers].
+#' See [containers]. A `cli_div` container is special, because it may
+#' add new themes, that are valid within the container.
 #'
 #' @param id Element id, a string. If `NULL`, then a new id is generated
 #'   and returned.

@@ -85,9 +85,31 @@ NULL
 
 #' CLI containers
 #'
-#' TODO
+#' Container elements may contain other elements. Currently the following
+#' commands create container elements: [cli_div()], [cli_par()], the list
+#' elements: [cli_ul()], [cli_ol()], [cli_dl()], and list items are
+#' containers as well: [cli_it()].
+#'
+#' Container elements need to be closed with [cli_end()]. For convenience,
+#' they are have an `.auto_close` argument, which allows automatically
+#' closing a container element, when the function that created it
+#' terminates (either regularly, or with an error).
 #'
 #' @name containers
+#' @examples
+#' ## div with custom theme
+#' d <- cli_div(theme = list(h1 = list(color = "blue",
+#'                                     "font-weight" = "bold")))
+#' cli_h1("Custom title")
+#' cli_end(d)
+#'
+#' ## Close automatically
+#' div <- function() {
+#'   cli_div(class = "tmp", theme = list(.tmp = list(color = "yellow")))
+#'   cli_text("This is yellow")
+#' }
+#' div()
+#' cli_text("This is not yellow any more")
 NULL
 
 #' CLI themes

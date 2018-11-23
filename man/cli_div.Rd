@@ -25,7 +25,8 @@ also used to auto-close the container if \code{.auto_close} is \code{TRUE}.}
 The id of the new container element, invisibly.
 }
 \description{
-See \link{containers}.
+See \link{containers}. A \code{cli_div} container is special, because it may
+add new themes, that are valid within the container.
 }
 \examples{
 ## div with custom theme
