@@ -20,7 +20,17 @@ clii_remove_theme <- function(self, private, id) {
   invisible(TRUE)
 }
 
-clii_builtin_theme <- function() {
+#' The built-in CLI theme
+#'
+#' This theme is always active, and it is at the bottom of the theme
+#' stack. See [themes].
+#'
+#' @seealso [themes], [simple_theme()].
+#' @return A named list, a CLI theme.
+#'
+#' @export
+
+builtin_theme <- function() {
   list(
     body = list(),
 

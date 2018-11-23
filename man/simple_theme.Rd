@@ -65,3 +65,6 @@ cli_end()
 
 cli_end()
 }
+\seealso{
+\link{themes}, \code{\link[=builtin_theme]{builtin_theme()}}.
+}

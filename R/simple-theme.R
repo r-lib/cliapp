@@ -20,6 +20,7 @@
 #'   Detection usually works in recent RStudio versions, and in iTerm
 #'   on macOS, but not on other platforms.
 #'
+#' @seealso [themes], [builtin_theme()].
 #' @export
 #' @examples
 #' cli_div(theme = cliapp::simple_theme())

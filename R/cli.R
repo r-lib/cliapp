@@ -137,7 +137,7 @@ cliapp <- R6Class(
 clii_init <- function(self, private, theme, user_theme, output) {
   private$output <- output
   private$raw_themes <- list(
-    default = clii_builtin_theme(), optional = theme)
+    default = builtin_theme(), optional = theme)
   private$theme <- theme_create(private$raw_themes)
   private$state <-
     list(doc = read_html("<html><body id=\"body\"></body></html>"))

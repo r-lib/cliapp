@@ -22,7 +22,7 @@ test_that("add/remove/list themes", {
 
 test_that("default theme is valid", {
   expect_error({
-    id <- default_app()$add_theme(clii_builtin_theme())
+    id <- default_app()$add_theme(builtin_theme())
     default_app()$remove_theme(id)
   }, NA)
 })
