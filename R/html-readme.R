@@ -13,8 +13,8 @@ knit_print.html <- function(x, zoom = 2, ...) {
   image_file <- tempfile(fileext = ".png")
   on.exit(unlink(image_file), add = TRUE)
   cat(html, file = html_file)
-  webshot::webshot(html_file, image_file, selector = "#content",
-                   zoom = zoom)
+  asNamespace("webshot")$webshot(html_file, image_file,
+                                 selector = "#content", zoom = zoom)
   img <- readBin(image_file, "raw", file.info(image_file)[, "size"])
   structure(
     list(image = img, extension = ".png", url = NULL),
