@@ -58,7 +58,9 @@ clii__cat_ln <- function(self, private, lines, indent) {
       cat(paste0(lines, "\n"), sep = "")
     }
   } else {
-    bar$message(lines, set_width = FALSE)
+    msg <- paste(lines, sep = "\n")
+    msg <- crayon::reset(msg)
+    bar$message(msg, set_width = FALSE)
   }
 }
 
