@@ -5,8 +5,9 @@ cliapp <- R6Class(
   "cliapp",
   public = list(
     initialize = function(theme = getOption("cli.theme"),
+                          user_theme = getOption("cli.user_theme"),
                           output = c("message", "stdout"))
-      clii_init(self, private, theme, match.arg(output)),
+      clii_init(self, private, theme, user_theme, match.arg(output)),
 
     ## Themes
     list_themes = function()
@@ -133,7 +134,7 @@ cliapp <- R6Class(
 
 #' @importFrom xml2 read_html xml_find_first
 
-clii_init <- function(self, private, theme, output) {
+clii_init <- function(self, private, theme, user_theme, output) {
   private$output <- output
   private$raw_themes <- list(
     default = clii_builtin_theme(), optional = theme)
@@ -152,6 +153,8 @@ clii_init <- function(self, private, theme, output) {
   private$state$styles <- list(body = root_style)
 
   private$state$xstyles <- character()
+
+  self$add_theme(user_theme)
 
   invisible(self)
 }

@@ -37,6 +37,7 @@ cliappenv$pid <- Sys.getpid()
 #' `default_app` returns the default app, the one on the top of the stack.
 #'
 #' @param theme Theme to use, passed to the [cliapp] initializer.
+#' @param user_theme Theme to override the styles in `theme`.
 #' @param output How to print the output, passed to [cliapp] initializer.
 #' @param .auto_close Whether to stop the app, when the calling frame
 #'   is destroyed.
@@ -52,10 +53,12 @@ cliappenv$pid <- Sys.getpid()
 #' @export
 
 start_app <- function(theme = getOption("cli.theme"),
+                      user_theme = getOption("cli.user_theme"),
                       output = c("message", "stdout"), .auto_close = TRUE,
                       .envir = parent.frame()) {
 
-  app <- cliapp$new(theme = theme, output = match.arg(output))
+  app <- cliapp$new(theme = theme, user_theme = user_theme,
+                    output = match.arg(output))
   cliappenv$stack[[length(cliappenv$stack) + 1]] <- app
 
   if (.auto_close && !identical(.envir, globalenv())) {

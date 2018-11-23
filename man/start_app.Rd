@@ -6,7 +6,8 @@
 \alias{default_app}
 \title{Start, stop, query the default cli application}
 \usage{
-start_app(theme = getOption("cli.theme"), output = c("message",
+start_app(theme = getOption("cli.theme"),
+  user_theme = getOption("cli.user_theme"), output = c("message",
   "stdout"), .auto_close = TRUE, .envir = parent.frame())
 
 stop_app(app = NULL)
@@ -15,6 +16,8 @@ default_app()
 }
 \arguments{
 \item{theme}{Theme to use, passed to the \link{cliapp} initializer.}
+
+\item{user_theme}{Theme to override the styles in \code{theme}.}
 
 \item{output}{How to print the output, passed to \link{cliapp} initializer.}
 

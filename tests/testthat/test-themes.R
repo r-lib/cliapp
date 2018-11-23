@@ -45,3 +45,18 @@ test_that("simple theme", {
   expect_true(all(names(def) != ""))
   expect_true(all(vlapply(def, is.list)))
 })
+
+test_that("user's override", {
+  custom <- list(".alert::before" = list(content = "custom:"))
+  override <- list(".alert::before" = list(content = "override:"))
+
+  start_app(theme = custom)
+  out <- capt0(cli_alert("Alert!"))
+  expect_match(out, "custom:")
+  stop_app()
+
+  start_app(theme = custom, user_theme = override)
+  out <- capt0(cli_alert("Alert!"))
+  expect_match(out, "override:")
+  stop_app()
+})
