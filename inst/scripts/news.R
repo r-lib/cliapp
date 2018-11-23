@@ -18,7 +18,7 @@ load_packages <- function() {
     library(parsedate)
     library(docopt) },
     error = function(e) {
-      default_app()$alert_danger(
+      cli_alert_danger(
             "The {pkg glue}, {pkg httr}, {pkg jsonlite}, {pkg prettyunits},",
             " {pkg parsedate} and {pkg docopt} packages are needed!")
       q(save = "no", status = 1)
@@ -78,10 +78,8 @@ do_query <- function(ep) {
 }
 
 format_results <- function(results) {
-  default_app()$
-    div(theme = list(ul = list("list-style-type" = "")))
-  default_app()$ol()
-
+  cli_div(theme = list(ul = list("list-style-type" = "")))
+  cli_ol()
   lapply(results, format_result)
 }
 
@@ -109,11 +107,11 @@ New package releases on CRAN
 format_result <- function(result) {
   pkg <- result$package
   ago <- vague_dt(Sys.time() - parse_iso_8601(result$date))
-  default_app()$it()
-  default_app()$text("{pkg {pkg$Package}} {pkg$Version} --
+  cli_it()
+  cli_text("{pkg {pkg$Package}} {pkg$Version} --
            {ago} by {emph {pkg$Maintainer}}")
-  default_app()$text("{pkg$Title}")
-  default_app()$text("{url https://r-pkg.org/pkg/{pkg$Package}}")
+  cli_text("{pkg$Title}")
+  cli_text("{url https://r-pkg.org/pkg/{pkg$Package}}")
 }
 
 if (is.null(sys.calls())) {

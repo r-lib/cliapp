@@ -14,7 +14,7 @@ load_packages <- function() {
     library(docopt)
     library(prettyunits)
     error = function(e) {
-      default_app()$alert_danger(
+      cli_alert_danger(
             "The {pkg pkgsearch}, {pkg prettyunits} and {pkg docopt} packages are needed!")
       q(save = "no", status = 1)
     }
@@ -33,34 +33,33 @@ search <- function(terms, from = 1, size = 5) {
 `%||%` <- function(l, r) if (is.null(l)) r else l
 
 do_query <- function(query, from, size) {
-  default_app()$alert_info("Searching...")
+  cli_alert_info("Searching...")
   pkg_search(query, from = from, size = size)
 }
 
 format_result <- function(obj, from, size) {
   meta <- attr(obj, "metadata")
   if (!meta$total) {
-    default_app()$alert_danger("No results :(")
+    cli_alert_danger("No results :(")
     return()
   }
 
-  default_app()$
-    alert_success("Found {meta$total} packages in {pretty_ms(meta$took)}")$
-    text()$
-    div(theme = list(ul = list("list-style-type" = "")))
-  default_app()$ol()
+  cli_alert_success("Found {meta$total} packages in {pretty_ms(meta$took)}")
+  cli_text()
+  cli_div(theme = list(ul = list("list-style-type" = "")))
+  cli_ol()
 
   lapply(seq_len(nrow(obj)), function(i) format_hit(obj[i,]))
 }
 
 format_hit <- function(hit) {
   ago <- vague_dt(Sys.time() - hit$date)
-  default_app()$it()
-  default_app()$text("{pkg {hit$package}} {hit$version}  --
+  cli_it()
+  cli_text("{pkg {hit$package}} {hit$version}  --
           {emph {hit$title}}")
-  default_app()$par()
-  default_app()$text(hit$description)
-  default_app()$verbatim("{emph {ago} by {hit$maintainer_name}}")
+  cli_par()
+  cli_text(hit$description)
+  cli_text("{emph {ago} by {hit$maintainer_name}}")
 }
 
 parse_arguments <- function() {

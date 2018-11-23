@@ -11,13 +11,13 @@ setup_app <- function() {
 }
 
 load_packages <- function() {
-  tryCatch({
+  tryCatch(suppressPackageStartupMessages({
     library(cliapp)
     library(cli)
     library(pkgcache)
-    library(docopt) },
+    library(docopt) }),
     error = function(e) {
-      default_app()$alert_danger("The {pkg pkgcache} and {pkg docopt} packages are needed!")
+      cli_alert_danger("The {pkg pkgcache} and {pkg docopt} packages are needed!")
       q(save = "no", status = 1)
     })
 }
@@ -27,7 +27,7 @@ outdated <- function(lib = NULL, notcran = FALSE) {
   setup_app()
   if (is.null(lib)) lib <- .libPaths()[1]
   inst <- utils::installed.packages(lib = lib)
-  default_app()$alert_info("Getting repository metadata")
+  cli_alert_info("Getting repository metadata")
   repo <- meta_cache_list(rownames(inst))
 
   if (!notcran) inst <- inst[inst[, "Package"] %in% repo$package, ]
@@ -37,7 +37,7 @@ outdated <- function(lib = NULL, notcran = FALSE) {
     iver <- inst[i, "Version"]
 
     if (! pkg %in% repo$package) {
-      default_app()$alert_info("{pkg {pkg}}: \tnot a CRAN/BioC package")
+      cli_alert_info("{pkg {pkg}}: \tnot a CRAN/BioC package")
       next
     }
 
@@ -51,7 +51,7 @@ outdated <- function(lib = NULL, notcran = FALSE) {
     bin <- if (any(newest$platform != "source")) "bin" else ""
     src <- if (any(newest$platform == "source")) "src" else ""
 
-    default_app()$alert_danger(
+    cli_alert_danger(
           "{pkg {pkg}} \t{iver} {symbol$arrow_right} {mnver}  {emph ({bin} {src})}")
   }
 }
