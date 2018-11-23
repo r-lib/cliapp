@@ -10,15 +10,15 @@
 #' In addition to regular glue interpolation, cliapp can also add classes
 #' to parts of the text, and these classes can be used in themes. For
 #' example
-#' 
+#'
 #' ```
 #' cli_text("This is {emph important}.")
 #' ```
-#' 
+#'
 #' adds a class to the "important" word, class "emph". Note that in this
 #' cases the string within the braces is not a valid R expression. If you
 #' want to mix classes with interpolation, add another pair of braces:
-#' 
+#'
 #' ```
 #' adjective <- "great"
 #' cli_text("This is {emph {adjective}}.")
@@ -27,7 +27,7 @@
 #' An inline class will always create a `span` element internally. So in
 #' themes, you can use the `span.emph` CSS selector to change how inline
 #' text is emphasized:
-#' 
+#'
 #' ```
 #' cli_div(theme = list(span.emph = list(color = "red")))
 #' adjective <- "nice and red"
@@ -114,6 +114,77 @@ NULL
 
 #' CLI themes
 #'
-#' TODO
+#' CLI elements can be styled via a CSS-like language of selectors and
+#' properties. Note that while most of the CSS3 language is supported,
+#' a lot visual properties cannot be implemented on a terminal, so these
+#' will be ignored.
+#'
+#' @section Adding themes:
+#' The style of an element is calculated from themes from four sources.
+#' These form a stack, and the styles on the top of the stack take
+#' precedence, over styles in the bottom.
+#'
+#' 1. The cliapp package has a builtin theme. This is always active.
+#'    See [builtin_theme()].
+#' 2. When an app object is created via [start_app()], the caller can
+#'    specify a theme, that is added to theme stack. If no theme is
+#'    specified for [start_app()], the content of the `cli.theme` option
+#'    is used. Removed when the corresponding app stops.
+#' 3. The user may speficy a theme in the `cli.user_theme` option. This
+#'    is added to the stack _after_ the app's theme (step 2.), so it can
+#'    override its settings. Removed when the app that added it stops.
+#' 4. Themes specified explicitly in [cli_div()] elements. These are
+#'    removed from the theme stack, when the corresponding [cli_div()]
+#'    elements are closed.
+#'
+#' @section Writing themes:
+#' A theme is a named list of lists. The name of each entry is a CSS
+#' selector. Most features of CSS selectors are supported here:, for a
+#' complete reference, see the selectr package.
+#'
+#' The content of a theme list entry is another named list, where the
+#' names are CSS properties, e.g. `color`, or `font-weight` or
+#' `margin-left`, and the list entries themselves define the values of
+#' the properties. See [builtin_theme()] and [simple_theme()] for examples.
+#'
+#' @section CSS pseudo elements:
+#' Currently only the `::before` and `::after` pseudo elements are
+#' supported.
+#'
+#' @section Formatter callbacks:
+#' For flexibility, themes may also define formatter functions, with
+#' property name `fmt`. These will be called once the other styles are
+#' applied to an element. They are only called on elements that produce
+#' output, i.e. _not_ on container elements.
+#'
+#' @section Supported properties:
+#' Right now only a limited set of properties are supported. These include
+#' left, right, top and bottom margins, background and foreground colors,
+#' bold and italic fonts, underlined text. The `content` property is
+#' supported to insert text via `::before` and `::after` selectors.
+#'
+#' More properties might be adder later.
+#'
+#' Please see the example themes and the source code for now for the
+#' details.
+#'
+#' @section Examples:
+#' Color of headers, that are only active in paragraphs with an
+#' 'output' class:
+#' ```
+#' list(
+#'   "par.output h1" = list("background-color" = "red", color = "#e0e0e0"),
+#'   "par.output h2" = list("background-color" = "orange", color = "#e0e0e0"),
+#'   "par.output h3" = list("background-color" = "blue", color = "#e0e0e0")
+#' )
+#' ```
+#'
+#' Create a custom alert type:
+#' ```
+#' list(
+#'   ".alert-start::before" = list(content = symbol$play),
+#'   ".alert-stop::before"  = list(content = symbol$stop)
+#' )
+#' ```
 #' @name themes
 NULL
