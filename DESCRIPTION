@@ -27,5 +27,7 @@ Suggests:
     covr,
     rstudioapi,
     testthat
+Remotes:
+    r-lib/callr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
