@@ -93,6 +93,7 @@ test_that("output in shild process", {
         cliapp::start_app(theme = cliapp::simple_theme())
         cliapp::cli_h1("Title")
         cliapp::cli_text("This is generated in the {emph subprocess}.")
+        "foobar"
       }
     )
   }
@@ -101,16 +102,20 @@ test_that("output in shild process", {
   on.exit(rs$kill(), add = TRUE)
 
   msgs <- list()
-  withCallingHandlers(
+  result <- withCallingHandlers(
     callr_message = function(msg) {
       msgs <<- c(msgs, list(msg))
       if (!is.null(findRestart("muffleMessage"))) {
         invokeRestart("muffleMessage")
       }
     },
-    rs$run(do)
+    rs$run_with_output(do)
   )
 
+  expect_equal(result$stdout, "")
+  expect_equal(result$stderr, "")
+  expect_identical(result$result, "foobar")
+  expect_null(result$error)
   lapply(msgs, expect_s3_class, "callr_message")
   str <- paste(vcapply(msgs, "[[", "message"), collapse = "")
   expect_true(crayon::has_style(str))
