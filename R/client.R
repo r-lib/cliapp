@@ -398,7 +398,7 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' as [progress::progress_bar], see examples below.
 #' 
 #' @export
-#' @examples
+#' @examplesIf !cliapp:::is_cran_check()
 #' {
 #'   p <- cli_progress_bar(total = 10)
 #'   cli_alert_info("Starting computation")

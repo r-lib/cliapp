@@ -18,10 +18,12 @@ as \link[progress:progress_bar]{progress::progress_bar}, see examples below.
 A progress bar using the progress package
 }
 \examples{
+\dontshow{if (!cliapp:::is_cran_check()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 {
   p <- cli_progress_bar(total = 10)
   cli_alert_info("Starting computation")
   for (i in 1:10) { p$tick(); Sys.sleep(0.2) }
   cli_alert_success("Done")
 }
+\dontshow{\}) # examplesIf}
 }

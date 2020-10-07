@@ -44,7 +44,7 @@ the properties. See \code{\link[=builtin_theme]{builtin_theme()}} and \code{\lin
 
 \section{CSS pseudo elements}{
 
-Currently only the \code{::before} and \code{::after} pseudo elements are
+Currently only the \verb{::before} and \verb{::after} pseudo elements are
 supported.
 }
 
@@ -61,7 +61,7 @@ output, i.e. \emph{not} on container elements.
 Right now only a limited set of properties are supported. These include
 left, right, top and bottom margins, background and foreground colors,
 bold and italic fonts, underlined text. The \code{content} property is
-supported to insert text via \code{::before} and \code{::after} selectors.
+supported to insert text via \verb{::before} and \verb{::after} selectors.
 
 More properties might be adder later.
 

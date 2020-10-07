@@ -22,7 +22,7 @@
 #'
 #' @seealso [themes], [builtin_theme()].
 #' @export
-#' @examples
+#' @examplesIf !cliapp:::is_cran_check()
 #' cli_div(theme = cliapp::simple_theme())
 #'
 #' cli_h1("Header 1")

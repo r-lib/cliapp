@@ -25,6 +25,7 @@ You can also use it temporarily, in a div element:\preformatted{cli_div(theme = 
 }
 }
 \examples{
+\dontshow{if (!cliapp:::is_cran_check()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 cli_div(theme = cliapp::simple_theme())
 
 cli_h1("Header 1")
@@ -64,6 +65,7 @@ cli_verbatim(format(ls))
 cli_end()
 
 cli_end()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{themes}, \code{\link[=builtin_theme]{builtin_theme()}}.
