@@ -1,6 +1,4 @@
 
-context("cli themes")
-
 setup(start_app())
 teardown(stop_app())
 
@@ -53,12 +51,10 @@ test_that("user's override", {
   start_app(theme = custom)
   out <- capt0(cli_alert("Alert!"))
   expect_match(out, "custom:")
-  stop_app()
 
   withr::with_options(list(cli.user_theme = override), {
     start_app(theme = custom)
     out <- capt0(cli_alert("Alert!"))
     expect_match(out, "override:")
-    stop_app()
   })
 })
