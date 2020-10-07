@@ -1,7 +1,7 @@
 
 > Create Rich Command Line Applications
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://tidyverse.org/lifecycle/#maturing)
+[![lifecycle](https://img.shields.io/badge/lifecycle-superseded-blue.svg)](https://tidyverse.org/lifecycle/#superseded)
 [![Linux Build Status](https://travis-ci.org/r-lib/cliapp.svg?branch=master)](https://travis-ci.org/r-lib/cliapp)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/cliapp?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cliapp)
 [![](http://www.r-pkg.org/badges/version/cliapp)](http://www.r-pkg.org/pkg/cliapp)

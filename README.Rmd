@@ -15,6 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Superseded
+
+This package is superseded, and we focus on the cli package now:
+https://github.com/r-lib/cli
+
 ## Installation
 
 ```{r eval = FALSE}
