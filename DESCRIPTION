@@ -1,6 +1,6 @@
 Package: cliapp
 Title: Create Rich Command Line Applications
-Version: 0.1.1
+Version: 0.1.1.9000
 Author: Gábor Csárdi
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Description: Create rich command line applications, with colors, headings,
