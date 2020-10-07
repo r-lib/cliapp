@@ -63,7 +63,7 @@ clii__container_end <- function(self, private, id) {
   rm(cnt)
 
   ## Bottom margin
-  del_from <- match(id, names(private$state$matching_styles))
+  del_from <- match(id, names(private$state$matching_styles) %||% character())
   bottom <- max(viapply(
     private$state$styles[del_from:length(private$state$styles)],
     function(x) as.integer(x$main$`margin-bottom` %||% 0L)
