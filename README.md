@@ -4,22 +4,33 @@ cliapp
 
 > Create Rich Command Line Applications
 
+<!-- badges: start -->
 [![lifecycle](https://img.shields.io/badge/lifecycle-superseded-blue.svg)](https://www.tidyverse.org/lifecycle/)
-[![Linux Build Status](https://travis-ci.org/r-lib/cliapp.svg?branch=master)](https://travis-ci.org/r-lib/cliapp)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/cliapp?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cliapp)
+[![R-CMD-check](https://github.com/r-lib/cliapp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/cliapp/actions/workflows/R-CMD-check.yaml)
 [![](https://www.r-pkg.org/badges/version/cliapp)](https://www.r-pkg.org/pkg/cliapp)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/cliapp)](https://www.r-pkg.org/pkg/cliapp)
 [![Coverage Status](https://img.shields.io/codecov/c/github/r-lib/cliapp/master.svg)](https://codecov.io/github/r-lib/cliapp?branch=master)
+<!-- badges: end -->
 
 Create rich command line applications, with colors, headings, lists, alerts,
 progress bars, etc. It uses CSS for theming.
 
 ---
 
+- [Superseded](#superseded)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Headings](#headings)
+  - [Text and inline markup](#text-and-inline-markup)
+  - [Alerts](#alerts)
+  - [Lists](#lists)
+  - [Progress bars](#progress-bars)
+- [License](#license)
+
 ## Superseded
 
 This package is superseded, and we focus on the cli package now:
-https://github.com/r-lib/cli
+<https://github.com/r-lib/cli>
 
 ## Installation
 

@@ -8,3 +8,5 @@
 ^\.gitignore$
 ^header\.md$
 ^revdep$
+^\.github$
+^codecov\.yml$
