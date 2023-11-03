@@ -99,21 +99,25 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
+<p>Stable version:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cliapp"</span><span class="op">)</span></span></code></pre></div>
+<p>Development version:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"r-lib/cliapp"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>This README uses the simple theme, included in the package, see <code>?simple_theme()</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/cliapp#readme" class="external-link">cliapp</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/start_app.html">start_app</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="reference/simple_theme.html">simple_theme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="headings">Headings<a class="anchor" aria-label="anchor" href="#headings"></a>
 </h3>
 <p><code><a href="reference/cli_h1.html">cli_h1()</a></code>, <code><a href="reference/cli_h1.html">cli_h2()</a></code> and <code><a href="reference/cli_h1.html">cli_h3()</a></code> create three levels of headings:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Title"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cli_h1.html">cli_h2</a></span><span class="op">(</span><span class="st">"Subtitle"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cli_h1.html">cli_h3</a></span><span class="op">(</span><span class="st">"Subsubtitle"</span><span class="op">)</span></span></code></pre></div>
@@ -123,7 +127,7 @@
 <h3 id="text-and-inline-markup">Text and inline markup<a class="anchor" aria-label="anchor" href="#text-and-inline-markup"></a>
 </h3>
 <p>All (non-verbatim) outputted text runs through <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>. In addition to glue interpolation, cliapp also supports inline markup via the <code>{markup text}</code> form. The builtin theme defines inline markup classes, see <code>?inline-markup</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{emph Emphasized text}, {strong Strong} importance.</span></span>
 <span><span class="st">  A piece of code: {code  sum(a) / length(a)}. Package names:</span></span>
 <span><span class="st">  {pkg cliapp}, file names: {path /usr/bin/env}, etc."</span><span class="op">)</span></span></code></pre></div>
@@ -132,7 +136,7 @@
 <div class="section level3">
 <h3 id="alerts">Alerts<a class="anchor" aria-label="anchor" href="#alerts"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"Generic alert"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cli_alert.html">cli_alert_danger</a></span><span class="op">(</span><span class="st">"Something went horribly wrong"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cli_alert.html">cli_alert_warning</a></span><span class="op">(</span><span class="st">"Better watch out!"</span><span class="op">)</span></span>
@@ -144,7 +148,7 @@
 <h3 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
 </h3>
 <p>Ordered, unordered and definition lists, they can be nested. See <code>?cli_ol()</code>, <code>?cli_ul()</code>, <code>?cli_dl()</code> and <code>?cli_it()</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"margin-left"</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="st">"one"</span>, .close <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cli_ol.html">cli_ol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span>, <span class="st">"foobar"</span><span class="op">)</span><span class="op">)</span></span>
@@ -180,12 +184,17 @@
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
+<div class="community">
+<h2 data-toc-skip>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
@@ -198,6 +207,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Gábor Csárdi <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Posit Software, PBC <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
 
@@ -208,7 +218,7 @@
 <li><a href="https://github.com/r-lib/cliapp/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/r-lib/cliapp/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://www.r-pkg.org/pkg/cliapp" class="external-link"><img src="https://www.r-pkg.org/badges/version/cliapp"></a></li>
 <li><a href="https://www.r-pkg.org/pkg/cliapp" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/cliapp" alt="CRAN RStudio mirror downloads"></a></li>
-<li><a href="https://codecov.io/github/r-lib/cliapp?branch=main" class="external-link"><img src="https://img.shields.io/codecov/c/github/r-lib/cliapp/main.svg" alt="Coverage Status"></a></li>
+<li><a href="https://app.codecov.io/gh/r-lib/cliapp?branch=main" class="external-link"><img src="https://codecov.io/gh/r-lib/cliapp/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
@@ -218,7 +228,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Gábor Csárdi.</p>
+<p>Developed by Gábor Csárdi, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown">
