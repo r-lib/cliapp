@@ -15,21 +15,27 @@ details.
 
 In addition to regular glue interpolation, cliapp can also add classes
 to parts of the text, and these classes can be used in themes. For
-example\preformatted{cli_text("This is \{emph important\}.")
-}
+example
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{cli_text("This is \{emph important\}.")
+}\if{html}{\out{</div>}}
 
 adds a class to the "important" word, class "emph". Note that in this
 cases the string within the braces is not a valid R expression. If you
-want to mix classes with interpolation, add another pair of braces:\preformatted{adjective <- "great"
+want to mix classes with interpolation, add another pair of braces:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{adjective <- "great"
 cli_text("This is \{emph \{adjective\}\}.")
-}
+}\if{html}{\out{</div>}}
 
 An inline class will always create a \code{span} element internally. So in
 themes, you can use the \code{span.emph} CSS selector to change how inline
-text is emphasized:\preformatted{cli_div(theme = list(span.emph = list(color = "red")))
+text is emphasized:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{cli_div(theme = list(span.emph = list(color = "red")))
 adjective <- "nice and red"
 cli_text("This is \{emph \{adjective\}\}.")
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Classes}{

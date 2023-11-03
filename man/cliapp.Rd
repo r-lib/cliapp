@@ -30,3 +30,7 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Gábor Csárdi \email{csardi.gabor@gmail.com}
+
+}

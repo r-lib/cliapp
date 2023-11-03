@@ -17,12 +17,14 @@ Note that this is in addition to the builtin theme. To use this theme,
 you can set it as the \code{cli.theme} option:
 }
 \details{
-\preformatted{options(cli.theme = cliapp::simple_theme())
-}
+\if{html}{\out{<div class="sourceCode">}}\preformatted{options(cli.theme = cliapp::simple_theme())
+}\if{html}{\out{</div>}}
 
 and then CLI apps started after this will use it as the default theme.
-You can also use it temporarily, in a div element:\preformatted{cli_div(theme = cliapp::simple_theme())
-}
+You can also use it temporarily, in a div element:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{cli_div(theme = cliapp::simple_theme())
+}\if{html}{\out{</div>}}
 }
 \examples{
 \dontshow{if (!cliapp:::is_cran_check()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
