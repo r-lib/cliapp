@@ -34,8 +34,16 @@ This package is superseded, and we focus on the cli package now:
 
 ## Installation
 
+Stable version:
+
 ``` r
 install.packages("cliapp")
+```
+
+Development version:
+
+``` r
+pak::pak("r-lib/cliapp")
 ```
 
 ## Usage
