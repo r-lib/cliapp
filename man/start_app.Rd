@@ -18,9 +18,9 @@ stop_app(app = NULL)
 default_app()
 }
 \arguments{
-\item{theme}{Theme to use, passed to the \link{cliapp} initializer.}
+\item{theme}{Theme to use, passed to the cliapp initializer.}
 
-\item{output}{How to print the output, passed to \link{cliapp} initializer.}
+\item{output}{How to print the output, passed to cliapp initializer.}
 
 \item{.auto_close}{Whether to stop the app, when the calling frame
 is destroyed.}
