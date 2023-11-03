@@ -31,3 +31,5 @@ Suggests:
     testthat
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+Depends: 
+    R (>= 3.6)
