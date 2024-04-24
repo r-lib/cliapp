@@ -1,5 +1,6 @@
+# cliapp 0.1.2
 
-# development version
+No changes.
 
 # 0.1.1
 
